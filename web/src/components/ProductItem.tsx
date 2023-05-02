@@ -1,10 +1,32 @@
-import React from "react";
-import { ProductType } from "../types/Product";
-import { Button, Card, Col } from "react-bootstrap";
+import { useContext } from "react";
+import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Store } from "../Store";
+import { CartItemType } from "../types/Cart";
+import { ProductType } from "../types/Product";
+import { convertProductToCartItem } from "../utils/utils";
 import Rating from "./Rating";
 
 export default function ProductItem({ product }: { product: ProductType }) {
+  const { state, dispatch } = useContext(Store);
+  const {
+    cart: { cartItems },
+  } = state;
+
+  const addToCartHandler = (item: CartItemType) => {
+    const existItem = cartItems.find((x) => x._id === product._id);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+    if (product.countInStock < quantity) {
+      toast.warn("Sorry. Product is out of stock");
+      return;
+    }
+    dispatch({
+      type: "CART_ADD_ITEM",
+      payload: { ...item, quantity },
+    });
+    toast.success("Product added to the cart");
+  };
   return (
     <Card>
       <Link to={`/product/${product.slug}`}>
@@ -23,7 +45,11 @@ export default function ProductItem({ product }: { product: ProductType }) {
             out of stock
           </Button>
         ) : (
-          <Button>Add to cart</Button>
+          <Button
+            onClick={() => addToCartHandler(convertProductToCartItem(product))}
+          >
+            Add to cart
+          </Button>
         )}
       </Card.Body>
     </Card>
