@@ -23,7 +23,7 @@ app.use(cors({ credentials: true, origin: "http://127.0.0.1:5173" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/products", productRouter);
-app.use("/api/singin", userRouter);
+app.use("/api/users", userRouter);
 app.use("/api/seed", seedRouter);
 
 const PORT = 4000;
