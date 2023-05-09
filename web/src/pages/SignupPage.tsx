@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { Store } from "../Store";
 import { getError } from "../utils/utils";
 import { ApiErrorType } from "../types/ApiError";
-import { useSignUpMutation } from "../hooks/userHooks";
+import { useSignupMutation } from "../hooks/userHooks";
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ export default function SignupPage() {
     }
   }, [navigate, redirect, userInfo]);
 
-  const { mutateAsync: signup, isLoading } = useSignUpMutation();
+  const { mutateAsync: signup, isLoading } = useSignupMutation();
 
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();

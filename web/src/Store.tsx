@@ -1,11 +1,5 @@
-import React, {
-  Dispatch,
-  PropsWithChildren,
-  Reducer,
-  createContext,
-  useReducer,
-} from "react";
-import { CartItemType, CartType, ShippingAddressType } from "./types/Cart";
+import React from "react";
+import { CartType, CartItemType, ShippingAddressType } from "./types/Cart";
 import { UserInfoType } from "./types/UserInfo";
 
 type AppState = {
@@ -18,13 +12,13 @@ const initialState: AppState = {
   userInfo: localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo")!)
     : null,
+
   mode: localStorage.getItem("mode")
     ? localStorage.getItem("mode")!
     : window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme:dark)").matches
+      window.matchMedia("(prefers-color-scheme: dark)").matches
     ? "dark"
     : "light",
-
   cart: {
     cartItems: localStorage.getItem("cartItems")
       ? JSON.parse(localStorage.getItem("cartItems")!)
@@ -35,8 +29,8 @@ const initialState: AppState = {
     paymentMethod: localStorage.getItem("paymentMethod")
       ? localStorage.getItem("paymentMethod")!
       : "PayPal",
-    shippingPrice: 0,
     itemsPrice: 0,
+    shippingPrice: 0,
     taxPrice: 0,
     totalPrice: 0,
   },
@@ -55,15 +49,15 @@ type Action =
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
     case "SWITCH_MODE":
+      localStorage.setItem("mode", state.mode === "dark" ? "light" : "dark");
       return { ...state, mode: state.mode === "dark" ? "light" : "dark" };
-
     case "CART_ADD_ITEM":
       const newItem = action.payload;
       const existItem = state.cart.cartItems.find(
-        (cardItem) => cardItem._id === newItem._id
+        (item: CartItemType) => item._id === newItem._id
       );
       const cartItems = existItem
-        ? state.cart.cartItems.map((item) =>
+        ? state.cart.cartItems.map((item: CartItemType) =>
             item._id === existItem._id ? newItem : item
           )
         : [...state.cart.cartItems, newItem];
@@ -74,19 +68,16 @@ function reducer(state: AppState, action: Action): AppState {
 
     case "CART_REMOVE_ITEM": {
       const cartItems = state.cart.cartItems.filter(
-        (cardItem) => cardItem._id !== action.payload._id
+        (item: CartItemType) => item._id !== action.payload._id
       );
-
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
-
       return { ...state, cart: { ...state.cart, cartItems } };
     }
-    case "CART_REMOVE_ITEM": {
+    case "CART_CLEAR":
       return { ...state, cart: { ...state.cart, cartItems: [] } };
-    }
+
     case "USER_SIGNIN":
       return { ...state, userInfo: action.payload };
-
     case "USER_SIGNOUT":
       return {
         mode:
@@ -110,7 +101,6 @@ function reducer(state: AppState, action: Action): AppState {
           totalPrice: 0,
         },
       };
-
     case "SAVE_SHIPPING_ADDRESS":
       return {
         ...state,
@@ -122,25 +112,22 @@ function reducer(state: AppState, action: Action): AppState {
     case "SAVE_PAYMENT_METHOD":
       return {
         ...state,
-        cart: {
-          ...state.cart,
-          paymentMethod: action.payload,
-        },
+        cart: { ...state.cart, paymentMethod: action.payload },
       };
     default:
       return state;
   }
 }
 
-const defaultDispatch: Dispatch<Action> = () => initialState;
+const defaultDispatch: React.Dispatch<Action> = () => initialState;
 
-const Store = createContext({
+const Store = React.createContext({
   state: initialState,
   dispatch: defaultDispatch,
 });
 
-function StoreProvider(props: PropsWithChildren<{}>) {
-  const [state, dispatch] = useReducer<Reducer<AppState, Action>>(
+function StoreProvider(props: React.PropsWithChildren<{}>) {
+  const [state, dispatch] = React.useReducer<React.Reducer<AppState, Action>>(
     reducer,
     initialState
   );

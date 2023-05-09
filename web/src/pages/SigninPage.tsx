@@ -5,9 +5,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import LoadingBox from "../components/LoadingBox";
 import { Store } from "../Store";
-import { useSignMutation } from "../hooks/userHooks";
+
 import { getError } from "../utils/utils";
 import { ApiErrorType } from "../types/ApiError";
+import { useSigninMutation } from "../hooks/userHooks";
 
 export default function SigninPage() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ export default function SigninPage() {
   const { state, dispatch } = useContext(Store);
   const { userInfo } = state;
 
-  const { mutateAsync: signin, isLoading } = useSignMutation();
+  const { mutateAsync: signin, isLoading } = useSigninMutation();
 
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();

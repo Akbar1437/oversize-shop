@@ -1,10 +1,9 @@
-import express from "express";
-import { ProductModel } from "../models/productModel";
+import express, { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
+import { ProductModel } from "../models/productModel";
 
 export const productRouter = express.Router();
-
-// /api/products
+// /api/prodcuts
 productRouter.get(
   "/",
   asyncHandler(async (req, res) => {
@@ -13,15 +12,23 @@ productRouter.get(
   })
 );
 
+productRouter.get(
+  "/categories",
+  asyncHandler(async (req: Request, res: Response) => {
+    const categories = await ProductModel.find().distinct("category");
+    res.json(categories);
+  })
+);
+
 // /api/slug/tshirt
 productRouter.get(
   "/slug/:slug",
   asyncHandler(async (req, res) => {
-    const products = await ProductModel.findOne({ slug: req.params.slug });
-    if (products) {
-      res.json(products);
+    const product = await ProductModel.findOne({ slug: req.params.slug });
+    if (product) {
+      res.json(product);
     } else {
-      res.status(404).json({ message: "Product not found" });
+      res.status(404).json({ message: "Product Not Found" });
     }
   })
 );
