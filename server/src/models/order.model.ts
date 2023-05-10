@@ -4,8 +4,8 @@ import {
   getModelForClass,
   Ref,
 } from "@typegoose/typegoose";
-import { Product } from "./productModel";
-import { User } from "./userModel";
+import { Product } from "./product.model";
+import { User } from "./user.model";
 
 class ShippingAddress {
   @prop()
