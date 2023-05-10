@@ -8,17 +8,22 @@ import { Store } from "../Store";
 import { CartItemType } from "../types/Cart";
 
 export default function CartPage() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
+
   const navigate = useNavigate();
-
+  const { state, dispatch } = useContext(Store);
   const {
-    state: {
-      mode,
-      cart: { cartItems },
-    },
-    dispatch,
-  } = useContext(Store);
+    mode,
+    cart: { cartItems },
+  } = state;
 
-  const updateCartHandler = (item: CartItemType, quantity: number) => {
+  // ---------------------------------------------------------------------------
+  // functions
+  // ---------------------------------------------------------------------------
+
+  function updateCartHandler(item: CartItemType, quantity: number) {
     if (item.countInStock < quantity) {
       toast.warn("Sorry. Product is out of stock");
       return;
@@ -27,15 +32,9 @@ export default function CartPage() {
       type: "CART_ADD_ITEM",
       payload: { ...item, quantity },
     });
-  };
-  const checkoutHandler = () => {
-    navigate("/signin?redirect=/shipping");
-  };
+  }
 
-  const removeItemHandler = (item: CartItemType) => {
-    dispatch({ type: "CART_REMOVE_ITEM", payload: item });
-  };
-
+  // ---------------------------------------------------------------------------
   return (
     <div>
       <Helmet>
@@ -85,7 +84,9 @@ export default function CartPage() {
                     <Col md={3}>${item.price}</Col>
                     <Col md={2}>
                       <Button
-                        onClick={() => removeItemHandler(item)}
+                        onClick={() =>
+                          dispatch({ type: "CART_REMOVE_ITEM", payload: item })
+                        }
                         variant={mode}
                       >
                         <i className="fas fa-trash"></i>
@@ -113,7 +114,7 @@ export default function CartPage() {
                     <Button
                       type="button"
                       variant="primary"
-                      onClick={checkoutHandler}
+                      onClick={() => navigate("/signin?redirect=/shipping")}
                       disabled={cartItems.length === 0}
                     >
                       Proceed to Checkout

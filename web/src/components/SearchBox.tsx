@@ -3,14 +3,23 @@ import { Button, Form, FormControl, InputGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 export default function SearchBox() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
+
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
 
-  const submitHandler = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    navigate(query ? `/search?query=${query}` : "/search");
-  };
+  // ---------------------------------------------------------------------------
+  // function
+  // ---------------------------------------------------------------------------
 
+  function submitHandler(event: React.SyntheticEvent) {
+    event.preventDefault();
+    navigate(query ? `/search?query=${query}` : "/search");
+  }
+
+  // ---------------------------------------------------------------------------
   return (
     <Form className="flex-grow-1 d-flex me-auto" onSubmit={submitHandler}>
       <InputGroup>

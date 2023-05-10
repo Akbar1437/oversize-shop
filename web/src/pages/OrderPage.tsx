@@ -4,7 +4,7 @@ import {
   SCRIPT_LOADING_STATE,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
@@ -16,13 +16,13 @@ import {
   useGetPaypalClientIdQuery,
   usePayOrderMutation,
 } from "../hooks/orderHooks";
-import { Store } from "../Store";
 import { ApiErrorType } from "../types/ApiError";
 import { getError } from "../utils/utils";
 
 export default function OrderPage() {
-  const { state } = useContext(Store);
-  const { userInfo } = state;
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
 
   const params = useParams();
   const { id: orderId } = params;
@@ -34,18 +34,15 @@ export default function OrderPage() {
     refetch,
   } = useGetOrderDetailsQuery(orderId!);
 
+  const [{ isPending, isRejected }, paypalDispatch] = usePayPalScriptReducer();
+  const { data: paypalConfig } = useGetPaypalClientIdQuery();
+
   const { mutateAsync: payOrder, isLoading: loadingPay } =
     usePayOrderMutation();
 
-  const testPayHandler = async () => {
-    await payOrder({ orderId: orderId! });
-    refetch();
-    toast.success("Order is paid");
-  };
-
-  const [{ isPending, isRejected }, paypalDispatch] = usePayPalScriptReducer();
-
-  const { data: paypalConfig } = useGetPaypalClientIdQuery();
+  // ---------------------------------------------------------------------------
+  // effects
+  // ---------------------------------------------------------------------------
 
   useEffect(() => {
     if (paypalConfig && paypalConfig.clientId) {
@@ -68,37 +65,40 @@ export default function OrderPage() {
 
   const paypalbuttonTransactionProps: PayPalButtonsComponentProps = {
     style: { layout: "vertical" },
-    createOrder(data, actions) {
-      return actions.order
-        .create({
-          purchase_units: [
-            {
-              amount: {
-                value: order!.totalPrice.toString(),
-              },
+    async createOrder(data, actions) {
+      const orderID = await actions.order.create({
+        purchase_units: [
+          {
+            amount: {
+              value: order!.totalPrice.toString(),
             },
-          ],
-        })
-        .then((orderID: string) => {
-          return orderID;
-        });
-    },
-    onApprove(data, actions) {
-      return actions.order!.capture().then(async (details) => {
-        try {
-          await payOrder({ orderId: orderId!, ...details });
-          refetch();
-          toast.success("Order is paid successfully");
-        } catch (err) {
-          toast.error(getError(err as ApiErrorType));
-        }
+          },
+        ],
       });
+      return orderID;
+    },
+    async onApprove(data, actions) {
+      const details = await actions.order!.capture();
+      try {
+        await payOrder({ orderId: orderId!, ...details });
+        refetch();
+        toast.success("Order is paid successfully");
+      } catch (err) {
+        toast.error(getError(err as ApiErrorType));
+      }
     },
     onError: (err) => {
       toast.error(getError(err as ApiErrorType));
     },
   };
 
+  const testPayHandler = async () => {
+    await payOrder({ orderId: orderId! });
+    refetch();
+    toast.success("Order is paid");
+  };
+
+  // ---------------------------------------------------------------------------
   return isLoading ? (
     <LoadingBox></LoadingBox>
   ) : error ? (

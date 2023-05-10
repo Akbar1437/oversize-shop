@@ -9,6 +9,8 @@ import { ApiErrorType } from "../types/ApiError";
 
 export default function HomePage() {
   const { data: products, isLoading, error } = useGetProductsQuery();
+
+  // ---------------------------------------------------------------------------
   return isLoading ? (
     <LoadingBox />
   ) : error ? (

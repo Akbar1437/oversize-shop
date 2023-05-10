@@ -8,9 +8,14 @@ import { getError } from "../utils/utils";
 import { ApiErrorType } from "../types/ApiError";
 
 export default function OrderHistoryPage() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
+
   const navigate = useNavigate();
   const { data: orders, isLoading, error } = useGetOrderHistoryQuery();
 
+  // ---------------------------------------------------------------------------
   return (
     <div>
       <Helmet>

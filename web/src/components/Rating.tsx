@@ -9,6 +9,7 @@ export default function Rating({
   numReviews?: number;
   caption?: string;
 }) {
+  // ---------------------------------------------------------------------------
   return (
     <div className="rating">
       <span>

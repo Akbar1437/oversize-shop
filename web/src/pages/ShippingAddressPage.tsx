@@ -6,18 +6,16 @@ import CheckoutSteps from "../components/CheckoutSteps";
 import { Store } from "../Store";
 
 export default function ShippingAddressPage() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
+
   const navigate = useNavigate();
   const { state, dispatch } = useContext(Store);
   const {
     userInfo,
     cart: { shippingAddress },
   } = state;
-
-  useEffect(() => {
-    if (!userInfo) {
-      navigate("/signin?redirect=/shipping");
-    }
-  }, [userInfo, navigate]);
 
   const [fullName, setFullName] = useState(shippingAddress.fullName || "");
   const [address, setAddress] = useState(shippingAddress.address || "");
@@ -26,9 +24,22 @@ export default function ShippingAddressPage() {
     shippingAddress.postalCode || ""
   );
   const [country, setCountry] = useState(shippingAddress.country || "");
+  // ---------------------------------------------------------------------------
+  // effects
+  // ---------------------------------------------------------------------------
 
-  const submitHandler = (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/signin?redirect=/shipping");
+    }
+  }, [userInfo]);
+
+  // ---------------------------------------------------------------------------
+  // functions
+  // ---------------------------------------------------------------------------
+
+  function submitHandler(event: React.SyntheticEvent) {
+    event.preventDefault();
     dispatch({
       type: "SAVE_SHIPPING_ADDRESS",
       payload: {
@@ -39,6 +50,7 @@ export default function ShippingAddressPage() {
         country,
       },
     });
+
     localStorage.setItem(
       "shippingAddress",
       JSON.stringify({
@@ -51,8 +63,9 @@ export default function ShippingAddressPage() {
     );
 
     navigate("/payment");
-  };
+  }
 
+  // ---------------------------------------------------------------------------
   return (
     <div>
       <Helmet>

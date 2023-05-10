@@ -9,24 +9,37 @@ import { convertProductToCartItem } from "../utils/utils";
 import Rating from "./Rating";
 
 export default function ProductItem({ product }: { product: ProductType }) {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
+
   const { state, dispatch } = useContext(Store);
   const {
     cart: { cartItems },
   } = state;
 
-  const addToCartHandler = (item: CartItemType) => {
+  // ---------------------------------------------------------------------------
+  // function
+  // ---------------------------------------------------------------------------
+
+  function addToCartHandler(item: CartItemType) {
     const existItem = cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
+
     if (product.countInStock < quantity) {
       toast.warn("Sorry. Product is out of stock");
       return;
     }
+
     dispatch({
       type: "CART_ADD_ITEM",
       payload: { ...item, quantity },
     });
+
     toast.success("Product added to the cart");
-  };
+  }
+
+  // ---------------------------------------------------------------------------
   return (
     <Card>
       <Link to={`/product/${product.slug}`}>

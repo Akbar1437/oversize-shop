@@ -21,9 +21,9 @@ export async function createOrderController(
       response.status(400).json({ message: "Cart is empty" });
     } else {
       const createdOrder = await OrderModel.create({
-        orderItems: orderItems.map((x: Product) => ({
-          ...x,
-          product: x._id,
+        orderItems: orderItems.map((orderItem: Product) => ({
+          ...orderItem,
+          product: orderItem._id,
         })),
         shippingAddress,
         paymentMethod,

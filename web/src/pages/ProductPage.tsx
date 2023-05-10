@@ -12,6 +12,15 @@ import { Store } from "../Store";
 import { toast } from "react-toastify";
 
 export default function ProductPage() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
+  const {
+    state: { cart },
+    dispatch,
+  } = useContext(Store);
+
+  const navigate = useNavigate();
   const params = useParams();
   const { slug } = params;
 
@@ -21,27 +30,30 @@ export default function ProductPage() {
     error,
   } = useGetProductDetailsBySlugQuery(slug!);
 
-  const { state, dispatch } = useContext(Store);
-  const { cart } = state;
+  // ---------------------------------------------------------------------------
+  // functions
+  // ---------------------------------------------------------------------------
 
-  const navigate = useNavigate();
+  function addToCartHandler() {
+    if (!product) return;
 
-  const addToCartHandler = () => {
-    const existItem = cart.cartItems.find((item) => item._id === product!._id);
+    const existItem = cart.cartItems.find((item) => item._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
 
-    if (product!.countInStock < quantity) {
+    if (product.countInStock < quantity) {
       toast.warn("Sorry. Product is out of stock");
       return;
     }
     dispatch({
       type: "CART_ADD_ITEM",
-      payload: { ...convertProductToCartItem(product!), quantity },
+      payload: { ...convertProductToCartItem(product), quantity },
     });
     toast.success("Product added to the cart");
-    navigate("/cart");
-  };
 
+    navigate("/cart");
+  }
+
+  // ---------------------------------------------------------------------------
   return isLoading ? (
     <LoadingBox />
   ) : error ? (

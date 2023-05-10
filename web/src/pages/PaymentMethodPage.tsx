@@ -6,6 +6,10 @@ import CheckoutSteps from "../components/CheckoutSteps";
 import { Store } from "../Store";
 
 export default function PaymentMethodPage() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
+
   const navigate = useNavigate();
   const { state, dispatch } = useContext(Store);
   const {
@@ -15,18 +19,29 @@ export default function PaymentMethodPage() {
   const [paymentMethodName, setPaymentMethodName] = useState(
     paymentMethod || "PayPal"
   );
+
+  // ---------------------------------------------------------------------------
+  // effects
+  // ---------------------------------------------------------------------------
+
   useEffect(() => {
     if (!shippingAddress.address) {
       navigate("/shipping");
     }
-  }, [shippingAddress, navigate]);
+  }, [shippingAddress]);
 
-  const submitHandler = (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  // ---------------------------------------------------------------------------
+  // functions
+  // ---------------------------------------------------------------------------
+
+  function submitHandler(event: React.SyntheticEvent) {
+    event.preventDefault();
     dispatch({ type: "SAVE_PAYMENT_METHOD", payload: paymentMethodName });
     localStorage.setItem("paymentMethod", paymentMethodName);
     navigate("/placeorder");
-  };
+  }
+
+  // ---------------------------------------------------------------------------
   return (
     <div>
       <CheckoutSteps step1 step2 step3></CheckoutSteps>

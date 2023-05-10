@@ -11,12 +11,32 @@ import { ApiErrorType } from "../types/ApiError";
 import { getError } from "../utils/utils";
 
 export default function PlaceOrderPage() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
+
   const navigate = useNavigate();
 
-  const { state, dispatch } = useContext(Store);
-  const { cart, userInfo } = state;
+  const {
+    state: { cart },
+    dispatch,
+  } = useContext(Store);
 
-  const round2 = (num: number) => Math.round(num * 100 + Number.EPSILON) / 100; // 123.2345 => 123.23
+  // ---------------------------------------------------------------------------
+  // effects
+  // ---------------------------------------------------------------------------
+
+  useEffect(() => {
+    if (!cart.paymentMethod) {
+      navigate("/payment");
+    }
+  }, [cart]);
+
+  // ---------------------------------------------------------------------------
+  // functions
+  // ---------------------------------------------------------------------------
+
+  const round2 = (num: number) => Math.round(num * 100 + Number.EPSILON) / 100;
 
   cart.itemsPrice = round2(
     cart.cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
@@ -27,7 +47,7 @@ export default function PlaceOrderPage() {
 
   const { mutateAsync: createOrder, isLoading } = useCreateOrderMutation();
 
-  const placeOrderHandler = async () => {
+  async function placeOrderHandler() {
     try {
       const data = await createOrder({
         orderItems: cart.cartItems,
@@ -44,14 +64,9 @@ export default function PlaceOrderPage() {
     } catch (err) {
       toast.error(getError(err as ApiErrorType));
     }
-  };
+  }
 
-  useEffect(() => {
-    if (!cart.paymentMethod) {
-      navigate("/payment");
-    }
-  }, [cart, navigate]);
-
+  // ---------------------------------------------------------------------------
   return (
     <div>
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>

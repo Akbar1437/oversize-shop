@@ -9,29 +9,41 @@ import { ApiErrorType } from "../types/ApiError";
 import { useSignupMutation } from "../hooks/userHooks";
 
 export default function SignupPage() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
+
   const navigate = useNavigate();
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get("redirect");
   const redirect = redirectInUrl ? redirectInUrl : "/";
+
+  const { state, dispatch } = useContext(Store);
+  const { userInfo } = state;
+
+  const { mutateAsync: signup } = useSignupMutation();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const { state, dispatch } = useContext(Store);
-  const { userInfo } = state;
+  // ---------------------------------------------------------------------------
+  // effects
+  // ---------------------------------------------------------------------------
 
   useEffect(() => {
     if (userInfo) {
       navigate(redirect);
     }
-  }, [navigate, redirect, userInfo]);
+  }, [redirect, userInfo]);
 
-  const { mutateAsync: signup, isLoading } = useSignupMutation();
+  // ---------------------------------------------------------------------------
+  // functions
+  // ---------------------------------------------------------------------------
 
-  const submitHandler = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  async function submitHandler(event: React.SyntheticEvent) {
+    event.preventDefault();
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -48,8 +60,9 @@ export default function SignupPage() {
     } catch (err) {
       toast.error(getError(err as ApiErrorType));
     }
-  };
+  }
 
+  // ---------------------------------------------------------------------------
   return (
     <Container className="small-container">
       <Helmet>

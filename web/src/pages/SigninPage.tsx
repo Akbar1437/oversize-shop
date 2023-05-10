@@ -11,6 +11,10 @@ import { ApiErrorType } from "../types/ApiError";
 import { useSigninMutation } from "../hooks/userHooks";
 
 export default function SigninPage() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
+
   const navigate = useNavigate();
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get("redirect");
@@ -24,8 +28,22 @@ export default function SigninPage() {
 
   const { mutateAsync: signin, isLoading } = useSigninMutation();
 
-  const submitHandler = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  // ---------------------------------------------------------------------------
+  // effects
+  // ---------------------------------------------------------------------------
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
+    }
+  }, [redirect, userInfo]);
+
+  // ---------------------------------------------------------------------------
+  // functions
+  // ---------------------------------------------------------------------------
+
+  async function submitHandler(event: React.SyntheticEvent) {
+    event.preventDefault();
     try {
       const data = await signin({
         email,
@@ -37,13 +55,9 @@ export default function SigninPage() {
     } catch (err) {
       toast.error(getError(err as ApiErrorType));
     }
-  };
+  }
 
-  useEffect(() => {
-    if (userInfo) {
-      navigate(redirect);
-    }
-  }, [navigate, redirect, userInfo]);
+  // ---------------------------------------------------------------------------
 
   return (
     <Container className="small-container">

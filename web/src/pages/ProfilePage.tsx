@@ -9,6 +9,10 @@ import { getError } from "../utils/utils";
 import { useUpdateProfileMutation } from "../hooks/userHooks";
 
 export default function ProfilePage() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
+
   const { state, dispatch } = useContext(Store);
   const { userInfo } = state;
   const [name, setName] = useState(userInfo!.name);
@@ -18,8 +22,12 @@ export default function ProfilePage() {
 
   const { mutateAsync: updateProfile, isLoading } = useUpdateProfileMutation();
 
-  const submitHandler = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  // ---------------------------------------------------------------------------
+  // functions
+  // ---------------------------------------------------------------------------
+
+  async function submitHandler(event: React.SyntheticEvent) {
+    event.preventDefault();
     try {
       if (password !== confirmPassword) {
         toast.error("Passwords do not match");
@@ -36,8 +44,9 @@ export default function ProfilePage() {
     } catch (err) {
       toast.error(getError(err as ApiErrorType));
     }
-  };
+  }
 
+  // ---------------------------------------------------------------------------
   return (
     <div className="container small-container">
       <Helmet>
