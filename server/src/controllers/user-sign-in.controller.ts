@@ -8,9 +8,10 @@ export async function userSignInOrdersController(
   response: Response
 ) {
   handler(request, response, async () => {
-    const user = await UserModel.findOne({ email: request.body.email });
+    const { email, password } = request.body;
+    const user = await UserModel.findOne({ email: email });
     if (user) {
-      if (bcrypt.compareSync(request.body.password, user.password)) {
+      if (bcrypt.compareSync(password, user.password)) {
         response.json({
           _id: user._id,
           name: user.name,

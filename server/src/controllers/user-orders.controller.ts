@@ -8,6 +8,6 @@ export async function userOrdersController(
 ) {
   handler(request, response, async () => {
     const orders = await OrderModel.find({ user: request.user._id });
-    response.json(orders);
+    return orders;
   });
 }

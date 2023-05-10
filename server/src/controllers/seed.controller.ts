@@ -12,6 +12,6 @@ export async function seedController(request: Request, response: Response) {
     await UserModel.deleteMany({});
     const createdUsers = await UserModel.insertMany(sampleUsers);
 
-    response.json({ createdProducts, createdUsers });
+    return { createdProducts, createdUsers };
   });
 }

@@ -8,10 +8,11 @@ export async function userSignUpOrdersController(
   response: Response
 ) {
   handler(request, response, async () => {
+    const { name, email, password } = request.body;
     const user = await UserModel.create({
-      name: request.body.name,
-      email: request.body.email,
-      password: bcrypt.hashSync(request.body.password),
+      name: name,
+      email: email,
+      password: bcrypt.hashSync(password),
     } as User);
     response.json({
       _id: user._id,
