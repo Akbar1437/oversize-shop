@@ -2,7 +2,7 @@ import axios from "axios";
 
 const apiClient = axios.create({
   baseURL:
-    process.env.NODE_ENV === "development" ? "http://localhost:4000/" : "/",
+    process.env.NODE_ENV === "development" ? "http://localhost:4000/api" : "/",
   headers: {
     "Content-Type": "application/json",
   },
@@ -10,7 +10,7 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   async (config) => {
     if (localStorage.getItem("userInfo"))
-      config.headers.authorization = `Bearer ${
+      config.headers.Authorization = `Bearer ${
         JSON.parse(localStorage.getItem("userInfo")!).token
       }`;
     return config;

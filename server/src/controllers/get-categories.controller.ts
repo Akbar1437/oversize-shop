@@ -1,10 +1,13 @@
 import { Request, Response } from "express";
-import * as asyncHandler from "express-async-handler";
 import { ProductModel } from "../models/product.model";
+import { handler } from "../utils/utils";
 
-export async function getCategoriesController() {
-  asyncHandler(async (req: Request, res: Response) => {
+export async function getCategoriesController(
+  request: Request,
+  response: Response
+) {
+  handler(request, response, async () => {
     const categories = await ProductModel.find().distinct("category");
-    res.json(categories);
+    response.json(categories);
   });
 }

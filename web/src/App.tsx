@@ -17,7 +17,7 @@ import LoadingBox from "./components/LoadingBox";
 import MessageBox from "./components/MessageBox";
 
 import { useGetCategoriesQuery } from "./hooks/productHooks";
-import SearchBox from "./pages/SearchBox";
+import SearchBox from "./components/SearchBox";
 import { ApiErrorType } from "./types/ApiError";
 import { getError } from "./utils/utils";
 

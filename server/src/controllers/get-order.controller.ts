@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import * as asyncHandler from "express-async-handler";
 import { OrderModel } from "../models/order.model";
+import { handler } from "../utils/utils";
 
-export async function getOrderController() {
-  asyncHandler(async (req: Request, res: Response) => {
-    const order = await OrderModel.findById(req.params.id);
+export async function getOrderController(request: Request, response: Response) {
+  handler(request, response, async () => {
+    const order = await OrderModel.findById(request.params.id);
     if (order) {
-      res.json(order);
+      response.json(order);
     } else {
-      res.status(404).json({ message: "Order Not Found" });
+      response.status(404).json({ message: "Order Not Found" });
     }
   });
 }

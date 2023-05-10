@@ -1,14 +1,17 @@
 import { Request, Response } from "express";
-import * as asyncHandler from "express-async-handler";
 import { ProductModel } from "../models/product.model";
+import { handler } from "../utils/utils";
 
-export async function getBySlugController() {
-  asyncHandler(async (req: Request, res: Response) => {
-    const product = await ProductModel.findOne({ slug: req.params.slug });
+export async function getBySlugController(
+  request: Request,
+  response: Response
+) {
+  handler(request, response, async () => {
+    const product = await ProductModel.findOne({ slug: request.params.slug });
     if (product) {
-      res.json(product);
+      response.json(product);
     } else {
-      res.status(404).json({ message: "Product Not Found" });
+      response.status(404).json({ message: "Product Not Found" });
     }
   });
 }

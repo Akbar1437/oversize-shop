@@ -6,6 +6,7 @@ import {
   getCategoriesController,
   getOrderController,
   getPaypalKeyController,
+  getProductsController,
   orderPayController,
   seedController,
   userOrdersController,
@@ -26,7 +27,7 @@ router.put("/profile", authMiddleware, userProfileController);
 router.get("/keys/paypal", getPaypalKeyController);
 router.get("/order/mine", authMiddleware, userOrdersController);
 router.get("/order/:id", authMiddleware, getOrderController);
-router.get("/products", getOrderController);
+router.get("/products", getProductsController);
 router.get("/categories", getCategoriesController);
 router.get("/slug/:slug", getBySlugController);
 router.get("/seed", seedController);

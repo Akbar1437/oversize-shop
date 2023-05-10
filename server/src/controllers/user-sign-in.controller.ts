@@ -1,18 +1,17 @@
-import { Request, Response } from "express";
-import * as asyncHandler from "express-async-handler";
 import * as bcrypt from "bcryptjs";
+import { Request, Response } from "express";
 import { UserModel } from "../models/user.model";
-import { generateToken } from "../utils/utils";
+import { generateToken, handler } from "../utils/utils";
 
 export async function userSignInOrdersController(
   request: Request,
   response: Response
 ) {
-  asyncHandler(async (req: Request, res: Response) => {
-    const user = await UserModel.findOne({ email: req.body.email });
+  handler(request, response, async () => {
+    const user = await UserModel.findOne({ email: request.body.email });
     if (user) {
-      if (bcrypt.compareSync(req.body.password, user.password)) {
-        res.json({
+      if (bcrypt.compareSync(request.body.password, user.password)) {
+        response.json({
           _id: user._id,
           name: user.name,
           email: user.email,
@@ -22,6 +21,6 @@ export async function userSignInOrdersController(
         return;
       }
     }
-    res.status(401).json({ message: "Invalid email or password" });
+    response.status(401).json({ message: "Invalid email or password" });
   });
 }

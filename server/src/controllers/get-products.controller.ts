@@ -1,10 +1,13 @@
 import { Request, Response } from "express";
-import * as asyncHandler from "express-async-handler";
 import { ProductModel } from "../models/product.model";
+import { handler } from "../utils/utils";
 
-export async function getProductsController() {
-  asyncHandler(async (req: Request, res: Response) => {
+export async function getProductsController(
+  request: Request,
+  response: Response
+) {
+  handler(request, response, async () => {
     const products = await ProductModel.find();
-    res.json(products);
+    return products;
   });
 }

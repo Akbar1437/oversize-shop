@@ -1,23 +1,22 @@
-import { Request, Response } from "express";
 import * as bcrypt from "bcryptjs";
-import * as asyncHandler from "express-async-handler";
+import { Request, Response } from "express";
 import { UserModel } from "../models/user.model";
-import { generateToken } from "../utils/utils";
+import { generateToken, handler } from "../utils/utils";
 
 export async function userProfileController(
   request: Request,
   response: Response
 ) {
-  asyncHandler(async (req: Request, res: Response) => {
-    const user = await UserModel.findById(req.user._id);
+  handler(request, response, async () => {
+    const user = await UserModel.findById(request.user._id);
     if (user) {
-      user.name = req.body.name || user.name;
-      user.email = req.body.email || user.email;
-      if (req.body.password) {
-        user.password = bcrypt.hashSync(req.body.password, 8);
+      user.name = request.body.name || user.name;
+      user.email = request.body.email || user.email;
+      if (request.body.password) {
+        user.password = bcrypt.hashSync(request.body.password, 8);
       }
       const updatedUser = await user.save();
-      res.send({
+      response.send({
         _id: updatedUser._id,
         name: updatedUser.name,
         email: updatedUser.email,
@@ -27,6 +26,6 @@ export async function userProfileController(
       return;
     }
 
-    res.status(404).json({ message: "User not found" });
+    response.status(404).json({ message: "User not found" });
   });
 }
