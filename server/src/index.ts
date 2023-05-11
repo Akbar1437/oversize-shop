@@ -3,7 +3,6 @@ import * as dotenv from "dotenv";
 import * as express from "express";
 import { router } from "./routers";
 import mongoose from "mongoose";
-
 dotenv.config();
 
 const PORT = 4000;

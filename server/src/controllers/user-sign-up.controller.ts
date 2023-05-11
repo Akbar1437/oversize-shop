@@ -14,12 +14,13 @@ export async function userSignUpOrdersController(
       email: email,
       password: bcrypt.hashSync(password),
     } as User);
-    response.json({
+
+    return {
       _id: user._id,
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
       token: generateToken(user),
-    });
+    };
   });
 }

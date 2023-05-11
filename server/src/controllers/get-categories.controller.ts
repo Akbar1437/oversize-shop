@@ -8,8 +8,6 @@ export async function getCategoriesController(
 ) {
   handler(request, response, async () => {
     const categories = await ProductModel.find().distinct("category");
-    console.log("categories", categories);
-
     return categories;
   });
 }

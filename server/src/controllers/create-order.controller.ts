@@ -17,8 +17,9 @@ export async function createOrderController(
       taxPrice,
       totalPrice,
     } = request.body;
+
     if (orderItems.length === 0) {
-      response.status(400).json({ message: "Cart is empty" });
+      throw new Error("Cart is empty");
     } else {
       const createdOrder = await OrderModel.create({
         orderItems: orderItems.map((orderItem: Product) => ({
@@ -33,9 +34,7 @@ export async function createOrderController(
         totalPrice,
         user: request.user._id,
       });
-      response
-        .status(201)
-        .json({ message: "Order Created", order: createdOrder });
+      return { order: createdOrder };
     }
   });
 }

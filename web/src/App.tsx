@@ -192,7 +192,9 @@ function App() {
               {getError(error as ApiErrorType)}
             </MessageBox>
           ) : (
-            categories!.map((category) => (
+            categories &&
+            categories.length &&
+            categories.map((category) => (
               <ListGroup.Item action key={category}>
                 <LinkContainer
                   to={{ pathname: "/search", search: `category=${category}` }}

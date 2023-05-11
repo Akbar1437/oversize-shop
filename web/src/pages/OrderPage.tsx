@@ -50,7 +50,7 @@ export default function OrderPage() {
         paypalDispatch({
           type: "resetOptions",
           value: {
-            "client-id": paypalConfig!.clientId,
+            "client-id": paypalConfig.clientId,
             currency: "USD",
           },
         });

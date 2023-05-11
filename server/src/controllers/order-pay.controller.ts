@@ -7,8 +7,9 @@ export async function orderPayController(request: Request, response: Response) {
     const { id, status, update_time, email_address } = request.body;
 
     const order = await OrderModel.findById(request.params.id);
-    if (!order)
-      return response.status(404).json({ message: "Order Not Found" });
+    if (!order) {
+      throw new Error("Order Not Found");
+    }
 
     order.isPaid = true;
     order.paidAt = new Date(Date.now());
@@ -20,9 +21,6 @@ export async function orderPayController(request: Request, response: Response) {
     };
     const updatedOrder = await order.save();
 
-    response.send({
-      order: updatedOrder,
-      message: "Order Paid Successfully",
-    });
+    return { order: updatedOrder };
   });
 }
