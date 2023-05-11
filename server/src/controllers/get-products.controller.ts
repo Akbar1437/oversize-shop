@@ -7,6 +7,7 @@ export async function getProductsController(
   response: Response
 ) {
   handler(request, response, async () => {
-    return await ProductModel.find();
+    const products = await ProductModel.find();
+    return products;
   });
 }

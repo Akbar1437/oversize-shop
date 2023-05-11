@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { sampleProducts, sampleUsers } from "../app/data";
 import { ProductModel } from "../models/product.model";
 import { UserModel } from "../models/user.model";
 import { handler } from "../utils/utils";
+import { sampleProducts, sampleUsers } from "../app/data";
 
 export async function seedController(request: Request, response: Response) {
   handler(request, response, async () => {
