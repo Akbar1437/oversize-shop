@@ -7,14 +7,28 @@ Run in the root directory of the cloned repository:
 
 ## Run Backend
 
-$ cd server
-$ npm install
-$ npm start
+```shell
+cd server
+```
+
+```shell
+npm install
+```
+
+```shell
+npm start
+```
 
 ## Run Frontend
 
-# open new terminal
+```shell
+cd web
+```
 
-$ cd web
-$ npm install
-$ npm start
+```shell
+npm install
+```
+
+```shell
+npm run dev
+```
