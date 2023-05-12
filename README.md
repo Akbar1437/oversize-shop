@@ -1,5 +1,7 @@
 # OVERSIZE shop
 
+MERN stack (MongoDB, ExpressJS, React and Node.JS)
+
 ## installation
 
 Before you start you need to clone the itn repository and run itn core services on your local machine.
