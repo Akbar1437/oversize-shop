@@ -1,56 +1,20 @@
-import React from "react";
-import { CartType, CartItemType, ShippingAddressType } from "./types/Cart";
-import { UserInfoType } from "./types/UserInfo";
+import { CartItemType } from "../types/Cart";
+import { ActionType, AppStateType } from "./store.context";
 
-type AppState = {
-  mode: string;
-  cart: CartType;
-  userInfo?: UserInfoType;
-};
-
-const initialState: AppState = {
-  userInfo: localStorage.getItem("userInfo")
-    ? JSON.parse(localStorage.getItem("userInfo")!)
-    : null,
-
-  mode: localStorage.getItem("mode")
-    ? localStorage.getItem("mode")!
-    : window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light",
-  cart: {
-    cartItems: localStorage.getItem("cartItems")
-      ? JSON.parse(localStorage.getItem("cartItems")!)
-      : [],
-    shippingAddress: localStorage.getItem("shippingAddress")
-      ? JSON.parse(localStorage.getItem("shippingAddress")!)
-      : {},
-    paymentMethod: localStorage.getItem("paymentMethod")
-      ? localStorage.getItem("paymentMethod")!
-      : "PayPal",
-    itemsPrice: 0,
-    shippingPrice: 0,
-    taxPrice: 0,
-    totalPrice: 0,
-  },
-};
-
-type Action =
-  | { type: "SWITCH_MODE" }
-  | { type: "CART_ADD_ITEM"; payload: CartItemType }
-  | { type: "CART_REMOVE_ITEM"; payload: CartItemType }
-  | { type: "CART_CLEAR" }
-  | { type: "USER_SIGNIN"; payload: UserInfoType }
-  | { type: "USER_SIGNOUT" }
-  | { type: "SAVE_SHIPPING_ADDRESS"; payload: ShippingAddressType }
-  | { type: "SAVE_PAYMENT_METHOD"; payload: string };
-
-function reducer(state: AppState, action: Action): AppState {
+export function reducer(state: AppStateType, action: ActionType): AppStateType {
   switch (action.type) {
+    // ---------------------------------------------------------------------------
+    // SWITCH_MODE
+    // ---------------------------------------------------------------------------
+
     case "SWITCH_MODE":
       localStorage.setItem("mode", state.mode === "dark" ? "light" : "dark");
       return { ...state, mode: state.mode === "dark" ? "light" : "dark" };
+
+    // ---------------------------------------------------------------------------
+    // CART_ADD_ITEM
+    // ---------------------------------------------------------------------------
+
     case "CART_ADD_ITEM":
       const newItem = action.payload;
       const existItem = state.cart.cartItems.find(
@@ -66,6 +30,10 @@ function reducer(state: AppState, action: Action): AppState {
 
       return { ...state, cart: { ...state.cart, cartItems } };
 
+    // ---------------------------------------------------------------------------
+    // CART_REMOVE_ITEM
+    // ---------------------------------------------------------------------------
+
     case "CART_REMOVE_ITEM": {
       const cartItems = state.cart.cartItems.filter(
         (item: CartItemType) => item._id !== action.payload._id
@@ -73,11 +41,24 @@ function reducer(state: AppState, action: Action): AppState {
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
+    // ---------------------------------------------------------------------------
+    // CART_CLEAR
+    // ---------------------------------------------------------------------------
+
     case "CART_CLEAR":
       return { ...state, cart: { ...state.cart, cartItems: [] } };
 
+    // ---------------------------------------------------------------------------
+    // USER_SIGNIN
+    // ---------------------------------------------------------------------------
+
     case "USER_SIGNIN":
       return { ...state, userInfo: action.payload };
+
+    // ---------------------------------------------------------------------------
+    // USER_SIGNOUT
+    // ---------------------------------------------------------------------------
+
     case "USER_SIGNOUT":
       return {
         mode:
@@ -101,6 +82,11 @@ function reducer(state: AppState, action: Action): AppState {
           totalPrice: 0,
         },
       };
+
+    // ---------------------------------------------------------------------------
+    // SAVE_SHIPPING_ADDRESS
+    // ---------------------------------------------------------------------------
+
     case "SAVE_SHIPPING_ADDRESS":
       return {
         ...state,
@@ -109,30 +95,22 @@ function reducer(state: AppState, action: Action): AppState {
           shippingAddress: action.payload,
         },
       };
+
+    // ---------------------------------------------------------------------------
+    // SAVE_PAYMENT_METHOD
+    // ---------------------------------------------------------------------------
+
     case "SAVE_PAYMENT_METHOD":
       return {
         ...state,
         cart: { ...state.cart, paymentMethod: action.payload },
       };
+
+    // ---------------------------------------------------------------------------
+    // default
+    // ---------------------------------------------------------------------------
+
     default:
       return state;
   }
 }
-
-const defaultDispatch: React.Dispatch<Action> = () => initialState;
-
-const Store = React.createContext({
-  state: initialState,
-  dispatch: defaultDispatch,
-});
-
-function StoreProvider(props: React.PropsWithChildren<{}>) {
-  const [state, dispatch] = React.useReducer<React.Reducer<AppState, Action>>(
-    reducer,
-    initialState
-  );
-
-  return <Store.Provider value={{ state, dispatch }} {...props} />;
-}
-
-export { Store, StoreProvider };

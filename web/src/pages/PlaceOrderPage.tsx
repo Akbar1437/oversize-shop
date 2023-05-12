@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,9 +6,9 @@ import { toast } from "react-toastify";
 import CheckoutSteps from "../components/CheckoutSteps";
 import LoadingBox from "../components/LoadingBox";
 import { useCreateOrderMutation } from "../hooks/orderHooks";
-import { Store } from "../Store";
 import { ApiErrorType } from "../types/ApiError";
 import { getError } from "../utils/utils";
+import { useStore } from "../store-context";
 
 export default function PlaceOrderPage() {
   // ---------------------------------------------------------------------------
@@ -20,7 +20,7 @@ export default function PlaceOrderPage() {
   const {
     state: { cart },
     dispatch,
-  } = useContext(Store);
+  } = useStore();
 
   // ---------------------------------------------------------------------------
   // effects

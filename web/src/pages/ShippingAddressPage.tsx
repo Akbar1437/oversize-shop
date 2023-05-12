@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import CheckoutSteps from "../components/CheckoutSteps";
-import { Store } from "../Store";
+import { useStore } from "../store-context";
 
 export default function ShippingAddressPage() {
   // ---------------------------------------------------------------------------
@@ -11,7 +11,7 @@ export default function ShippingAddressPage() {
   // ---------------------------------------------------------------------------
 
   const navigate = useNavigate();
-  const { state, dispatch } = useContext(Store);
+  const { state, dispatch } = useStore();
   const {
     userInfo,
     cart: { shippingAddress },

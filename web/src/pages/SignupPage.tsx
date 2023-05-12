@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Store } from "../Store";
 import { getError } from "../utils/utils";
 import { ApiErrorType } from "../types/ApiError";
 import { useSignupMutation } from "../hooks/userHooks";
+import { useStore } from "../store-context";
 
 export default function SignupPage() {
   // ---------------------------------------------------------------------------
@@ -18,7 +18,7 @@ export default function SignupPage() {
   const redirectInUrl = new URLSearchParams(search).get("redirect");
   const redirect = redirectInUrl ? redirectInUrl : "/";
 
-  const { state, dispatch } = useContext(Store);
+  const { state, dispatch } = useStore();
   const { userInfo } = state;
 
   const { mutateAsync: signup } = useSignupMutation();

@@ -1,19 +1,19 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
 import LoadingBox from "../components/LoadingBox";
-import { Store } from "../Store";
 import { ApiErrorType } from "../types/ApiError";
 import { getError } from "../utils/utils";
 import { useUpdateProfileMutation } from "../hooks/userHooks";
+import { useStore } from "../store-context";
 
 export default function ProfilePage() {
   // ---------------------------------------------------------------------------
   // variables
   // ---------------------------------------------------------------------------
 
-  const { state, dispatch } = useContext(Store);
+  const { state, dispatch } = useStore();
   const { userInfo } = state;
   const [name, setName] = useState(userInfo!.name);
   const [email, setEmail] = useState(userInfo!.email);

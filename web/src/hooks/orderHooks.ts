@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import apiClient from "../apiClient";
+import apiClient from "../http/apiClient";
 import { OrderType } from "../types/Order";
 import { CartItemType, ShippingAddressType } from "../types/Cart";
 

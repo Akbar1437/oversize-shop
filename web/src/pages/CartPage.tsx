@@ -1,11 +1,10 @@
-import { useContext } from "react";
 import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import MessageBox from "../components/MessageBox";
-import { Store } from "../Store";
 import { CartItemType } from "../types/Cart";
+import { useStore } from "../store-context";
 
 export default function CartPage() {
   // ---------------------------------------------------------------------------
@@ -13,7 +12,7 @@ export default function CartPage() {
   // ---------------------------------------------------------------------------
 
   const navigate = useNavigate();
-  const { state, dispatch } = useContext(Store);
+  const { state, dispatch } = useStore();
   const {
     mode,
     cart: { cartItems },

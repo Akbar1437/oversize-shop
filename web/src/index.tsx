@@ -9,12 +9,10 @@ import {
 } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import "./index.css";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from "./pages/HomePage.tsx";
 import ProductPage from "./pages/ProductPage.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { StoreProvider } from "./Store.tsx";
 import CartPage from "./pages/CartPage.tsx";
 import SigninPage from "./pages/SigninPage.tsx";
 import SignupPage from "./pages/SignupPage.tsx";
@@ -26,6 +24,7 @@ import OrderPage from "./pages/OrderPage.tsx";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import OrderHistoryPage from "./pages/OrderHistoryPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
+import { StoreProvider } from "./store-context/index.ts";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

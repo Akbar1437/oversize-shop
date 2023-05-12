@@ -1,19 +1,18 @@
-import { useContext } from "react";
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Store } from "../Store";
 import { CartItemType } from "../types/Cart";
 import { ProductType } from "../types/Product";
 import { convertProductToCartItem } from "../utils/utils";
 import Rating from "./Rating";
+import { useStore } from "../store-context";
 
 export default function ProductItem({ product }: { product: ProductType }) {
   // ---------------------------------------------------------------------------
   // variables
   // ---------------------------------------------------------------------------
 
-  const { state, dispatch } = useContext(Store);
+  const { state, dispatch } = useStore();
   const {
     cart: { cartItems },
   } = state;

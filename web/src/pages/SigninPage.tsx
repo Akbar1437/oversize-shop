@@ -1,14 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import LoadingBox from "../components/LoadingBox";
-import { Store } from "../Store";
-
 import { getError } from "../utils/utils";
 import { ApiErrorType } from "../types/ApiError";
 import { useSigninMutation } from "../hooks/userHooks";
+import { useStore } from "../store-context";
 
 export default function SigninPage() {
   // ---------------------------------------------------------------------------
@@ -23,7 +22,7 @@ export default function SigninPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { state, dispatch } = useContext(Store);
+  const { state, dispatch } = useStore();
   const { userInfo } = state;
 
   const { mutateAsync: signin, isLoading } = useSigninMutation();

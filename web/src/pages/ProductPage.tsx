@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useGetProductDetailsBySlugQuery } from "../hooks/productHooks";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,8 +8,8 @@ import { convertProductToCartItem, getError } from "../utils/utils";
 import { ApiErrorType } from "../types/ApiError";
 import { Badge, Button, Card, Col, ListGroup, Row } from "react-bootstrap";
 import Rating from "../components/Rating";
-import { Store } from "../Store";
 import { toast } from "react-toastify";
+import { useStore } from "../store-context";
 
 export default function ProductPage() {
   // ---------------------------------------------------------------------------
@@ -18,7 +18,7 @@ export default function ProductPage() {
   const {
     state: { cart },
     dispatch,
-  } = useContext(Store);
+  } = useStore();
 
   const navigate = useNavigate();
   const params = useParams();

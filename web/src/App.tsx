@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Container,
@@ -11,42 +11,47 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Store } from "./Store";
-
 import LoadingBox from "./components/LoadingBox";
 import MessageBox from "./components/MessageBox";
-
 import { useGetCategoriesQuery } from "./hooks/productHooks";
 import SearchBox from "./components/SearchBox";
 import { ApiErrorType } from "./types/ApiError";
 import { getError } from "./utils/utils";
+import { useStore } from "./store-context";
 
 function App() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
   const {
     state: { mode, cart, userInfo },
     dispatch,
-  } = useContext(Store);
+  } = useStore();
+
+  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+  const { data: categories, isLoading, error } = useGetCategoriesQuery();
+
+  // ---------------------------------------------------------------------------
+  // effects
+  // ---------------------------------------------------------------------------
 
   useEffect(() => {
     document.body.setAttribute("data-bs-theme", mode);
   }, [mode]);
 
-  const switchModeHandler = () => {
-    dispatch({ type: "SWITCH_MODE" });
-  };
-  const signoutHandler = () => {
+  // ---------------------------------------------------------------------------
+  // functions
+  // ---------------------------------------------------------------------------
+
+  function signoutHandler() {
     dispatch({ type: "USER_SIGNOUT" });
     localStorage.removeItem("userInfo");
     localStorage.removeItem("cartItems");
     localStorage.removeItem("shippingAddress");
     localStorage.removeItem("paymentMethod");
     window.location.href = "/signin";
-  };
-
-  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
-
-  const { data: categories, isLoading, error } = useGetCategoriesQuery();
-
+  }
+  // ---------------------------------------------------------------------------
   return (
     <div className="d-flex flex-column vh-100">
       <ToastContainer position="bottom-center" limit={1} />
@@ -68,7 +73,7 @@ function App() {
                 <Link
                   to="#"
                   className="nav-link header-link"
-                  onClick={switchModeHandler}
+                  onClick={() => dispatch({ type: "SWITCH_MODE" })}
                 >
                   <i
                     className={mode === "light" ? "fa fa-sun" : "fa fa-moon"}
