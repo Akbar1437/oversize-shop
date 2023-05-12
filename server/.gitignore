@@ -1,8 +1,10 @@
-/node_modules
-/build
+.vscode/
+.idea/
+build/
+node_modules/
+uploads/*
+!uploads/.gitkeep
+npm-debug.log
+tsconfig.tsbuildinfo
 .env
-
-
-#system files
-.DS_Store
-Thumb.db
+/deploy/helm-output/
