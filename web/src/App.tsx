@@ -18,6 +18,7 @@ import { useStore } from "./store-context";
 import { LoadingBox } from "./components/LoadingBox";
 import { MessageBox } from "./components/MessageBox";
 import { SearchBox } from "./components/SearchBox";
+import { ControlledCarousel } from "./components/Carousel";
 
 export function App() {
   // ---------------------------------------------------------------------------
@@ -57,7 +58,7 @@ export function App() {
       <ToastContainer position="bottom-center" limit={1} />
       <header>
         <Navbar
-          className="d-flex flex-column align-items-stretch p-2 pb-0 mb-3"
+          className="d-flex flex-column align-items-stretch p-2 pb-0 mb-4"
           bg="dark"
           variant="dark"
           expand="lg"
@@ -131,11 +132,11 @@ export function App() {
               </Nav>
             </Navbar.Collapse>
           </div>
-          <div className="sub-header">
-            <div className="d-flex">
+          <div className="sub-header mt-3">
+            <div className="d-flex align-items-center">
               <Link
                 to="#"
-                className="nav-link header-link p-1"
+                className="nav-link header-link p-2"
                 onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
               >
                 <i className="fas fa-bars"></i>
@@ -213,13 +214,18 @@ export function App() {
         </ListGroup>
       </div>
 
-      <main>
+      <main style={{ flexGrow: "1" }}>
         <Container className="mt-3">
           <Outlet />
         </Container>
       </main>
-      <footer>
-        <div className="text-center">All rights reserved</div>
+      <footer style={{ background: "#252e3d" }}>
+        <div
+          className="text-center"
+          style={{ color: "silver", padding: "1rem" }}
+        >
+          Copyright @2023 | All rights reserved
+        </div>
       </footer>
     </div>
   );

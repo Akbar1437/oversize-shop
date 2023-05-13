@@ -32,7 +32,7 @@ export function SearchBox() {
           aria-describedby="button-search"
           onChange={(e) => setQuery(e.target.value)}
         ></FormControl>
-        <Button variant="outline-primary" type="submit" id="button-search">
+        <Button variant="outline-warning" type="submit" id="button-search">
           <i className="fas fa-search"></i>
         </Button>
       </InputGroup>
