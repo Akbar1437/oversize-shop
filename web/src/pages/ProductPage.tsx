@@ -2,16 +2,16 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useGetProductDetailsBySlugQuery } from "../hooks/productHooks";
 import { useNavigate, useParams } from "react-router-dom";
-import LoadingBox from "../components/LoadingBox";
-import MessageBox from "../components/MessageBox";
 import { convertProductToCartItem, getError } from "../utils/utils";
 import { ApiErrorType } from "../types/ApiError";
 import { Badge, Button, Card, Col, ListGroup, Row } from "react-bootstrap";
-import Rating from "../components/Rating";
 import { toast } from "react-toastify";
 import { useStore } from "../store-context";
+import { LoadingBox } from "../components/LoadingBox";
+import { MessageBox } from "../components/MessageBox";
+import { Rating } from "../components/Rating";
 
-export default function ProductPage() {
+export function ProductPage() {
   // ---------------------------------------------------------------------------
   // variables
   // ---------------------------------------------------------------------------

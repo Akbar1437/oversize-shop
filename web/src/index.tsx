@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -9,22 +8,23 @@ import {
 } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import "./index.css";
-import HomePage from "./pages/HomePage.tsx";
-import ProductPage from "./pages/ProductPage.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import CartPage from "./pages/CartPage.tsx";
-import SigninPage from "./pages/SigninPage.tsx";
-import SignupPage from "./pages/SignupPage.tsx";
-import ShippingAddressPage from "./pages/ShippingAddressPage.tsx";
-import PaymentMethodPage from "./pages/PaymentMethodPage.tsx";
-import ProtectedRoute from "./components/ProtectedRoute.tsx";
-import PlaceOrderPage from "./pages/PlaceOrderPage.tsx";
-import OrderPage from "./pages/OrderPage.tsx";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import OrderHistoryPage from "./pages/OrderHistoryPage.tsx";
-import ProfilePage from "./pages/ProfilePage.tsx";
 import { StoreProvider } from "./store-context/index.ts";
+import { App } from "./App.tsx";
+import { HomePage } from "./pages/HomePage.tsx";
+import { ProtectedRoute } from "./components/ProtectedRoute.tsx";
+import { CartPage } from "./pages/CartPage.tsx";
+import { OrderHistoryPage } from "./pages/OrderHistoryPage.tsx";
+import { OrderPage } from "./pages/OrderPage.tsx";
+import { PaymentMethodPage } from "./pages/PaymentMethodPage.tsx";
+import { PlaceOrderPage } from "./pages/PlaceOrderPage.tsx";
+import { ProductPage } from "./pages/ProductPage.tsx";
+import { ProfilePage } from "./pages/ProfilePage.tsx";
+import { ShippingAddressPage } from "./pages/ShippingAddressPage.tsx";
+import { SigninPage } from "./pages/SigninPage.tsx";
+import { SignupPage } from "./pages/SignupPage.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

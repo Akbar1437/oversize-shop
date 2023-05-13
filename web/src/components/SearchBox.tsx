@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, FormControl, InputGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-export default function SearchBox() {
+export function SearchBox() {
   // ---------------------------------------------------------------------------
   // variables
   // ---------------------------------------------------------------------------

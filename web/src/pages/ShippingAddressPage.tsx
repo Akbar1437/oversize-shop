@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
-import CheckoutSteps from "../components/CheckoutSteps";
 import { useStore } from "../store-context";
+import { CheckoutSteps } from "../components/CheckoutSteps";
 
-export default function ShippingAddressPage() {
+export function ShippingAddressPage() {
   // ---------------------------------------------------------------------------
   // variables
   // ---------------------------------------------------------------------------

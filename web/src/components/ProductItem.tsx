@@ -4,10 +4,10 @@ import { toast } from "react-toastify";
 import { CartItemType } from "../types/Cart";
 import { ProductType } from "../types/Product";
 import { convertProductToCartItem } from "../utils/utils";
-import Rating from "./Rating";
 import { useStore } from "../store-context";
+import { Rating } from "./Rating";
 
-export default function ProductItem({ product }: { product: ProductType }) {
+export function ProductItem({ product }: { product: ProductType }) {
   // ---------------------------------------------------------------------------
   // variables
   // ---------------------------------------------------------------------------

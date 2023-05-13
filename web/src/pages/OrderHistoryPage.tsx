@@ -1,13 +1,13 @@
 import { Button } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
-import LoadingBox from "../components/LoadingBox";
-import MessageBox from "../components/MessageBox";
 import { useGetOrderHistoryQuery } from "../hooks/orderHooks";
 import { getError } from "../utils/utils";
 import { ApiErrorType } from "../types/ApiError";
+import { LoadingBox } from "../components/LoadingBox";
+import { MessageBox } from "../components/MessageBox";
 
-export default function OrderHistoryPage() {
+export function OrderHistoryPage() {
   // ---------------------------------------------------------------------------
   // variables
   // ---------------------------------------------------------------------------

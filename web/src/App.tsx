@@ -11,15 +11,15 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LoadingBox from "./components/LoadingBox";
-import MessageBox from "./components/MessageBox";
 import { useGetCategoriesQuery } from "./hooks/productHooks";
-import SearchBox from "./components/SearchBox";
 import { ApiErrorType } from "./types/ApiError";
 import { getError } from "./utils/utils";
 import { useStore } from "./store-context";
+import { LoadingBox } from "./components/LoadingBox";
+import { MessageBox } from "./components/MessageBox";
+import { SearchBox } from "./components/SearchBox";
 
-function App() {
+export function App() {
   // ---------------------------------------------------------------------------
   // variables
   // ---------------------------------------------------------------------------
@@ -84,7 +84,7 @@ function App() {
                 {userInfo ? (
                   <NavDropdown
                     className="header-link"
-                    title={`Hello, ${userInfo.name}`}
+                    title={` ${userInfo.name}`}
                   >
                     <LinkContainer to="/profile">
                       <NavDropdown.Item>User Profile</NavDropdown.Item>
@@ -138,9 +138,9 @@ function App() {
                 className="nav-link header-link p-1"
                 onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
               >
-                <i className="fas fa-bars"></i> All
+                <i className="fas fa-bars"></i>
               </Link>
-              {["Todays Deal", "Gifts", "On Sale"].map((x) => (
+              {["NEW", "STOCK", "PRESENT"].map((x) => (
                 <Link
                   key={x}
                   className="nav-link header-link p-1 px-3"
@@ -224,5 +224,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

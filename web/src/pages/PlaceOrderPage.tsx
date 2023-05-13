@@ -3,14 +3,14 @@ import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import CheckoutSteps from "../components/CheckoutSteps";
-import LoadingBox from "../components/LoadingBox";
 import { useCreateOrderMutation } from "../hooks/orderHooks";
 import { ApiErrorType } from "../types/ApiError";
 import { getError } from "../utils/utils";
 import { useStore } from "../store-context";
+import { CheckoutSteps } from "../components/CheckoutSteps";
+import { LoadingBox } from "../components/LoadingBox";
 
-export default function PlaceOrderPage() {
+export function PlaceOrderPage() {
   // ---------------------------------------------------------------------------
   // variables
   // ---------------------------------------------------------------------------

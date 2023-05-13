@@ -3,13 +3,13 @@ import { Button, Container, Form } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import LoadingBox from "../components/LoadingBox";
 import { getError } from "../utils/utils";
 import { ApiErrorType } from "../types/ApiError";
 import { useSigninMutation } from "../hooks/userHooks";
 import { useStore } from "../store-context";
+import { LoadingBox } from "../components/LoadingBox";
 
-export default function SigninPage() {
+export function SigninPage() {
   // ---------------------------------------------------------------------------
   // variables
   // ---------------------------------------------------------------------------

@@ -2,13 +2,13 @@ import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
-import LoadingBox from "../components/LoadingBox";
 import { ApiErrorType } from "../types/ApiError";
 import { getError } from "../utils/utils";
 import { useUpdateProfileMutation } from "../hooks/userHooks";
 import { useStore } from "../store-context";
+import { LoadingBox } from "../components/LoadingBox";
 
-export default function ProfilePage() {
+export function ProfilePage() {
   // ---------------------------------------------------------------------------
   // variables
   // ---------------------------------------------------------------------------

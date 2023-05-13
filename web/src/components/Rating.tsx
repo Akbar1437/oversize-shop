@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Rating({
+export function Rating({
   rating,
   numReviews,
   caption,

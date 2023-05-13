@@ -2,11 +2,11 @@ import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import MessageBox from "../components/MessageBox";
 import { CartItemType } from "../types/Cart";
 import { useStore } from "../store-context";
+import { MessageBox } from "../components/MessageBox";
 
-export default function CartPage() {
+export function CartPage() {
   // ---------------------------------------------------------------------------
   // variables
   // ---------------------------------------------------------------------------

@@ -8,7 +8,7 @@ import { ApiErrorType } from "../types/ApiError";
 import { useSignupMutation } from "../hooks/userHooks";
 import { useStore } from "../store-context";
 
-export default function SignupPage() {
+export function SignupPage() {
   // ---------------------------------------------------------------------------
   // variables
   // ---------------------------------------------------------------------------

@@ -1,13 +1,13 @@
 import { Col, Row } from "react-bootstrap";
-import LoadingBox from "../components/LoadingBox";
-import MessageBox from "../components/MessageBox";
-import ProductItem from "../components/ProductItem";
 import { Helmet } from "react-helmet-async";
 import { useGetProductsQuery } from "../hooks/productHooks";
 import { getError } from "../utils/utils";
 import { ApiErrorType } from "../types/ApiError";
+import { LoadingBox } from "../components/LoadingBox";
+import { MessageBox } from "../components/MessageBox";
+import { ProductItem } from "../components/ProductItem";
 
-export default function HomePage() {
+export function HomePage() {
   const { data: products, isLoading, error } = useGetProductsQuery();
 
   // ---------------------------------------------------------------------------
