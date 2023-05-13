@@ -10,3 +10,4 @@ export * from "./seed.controller";
 export * from "./user-sign-up.controller";
 export * from "./user-sign-in.controller";
 export * from "./user-profile.controller";
+export * from "./get-by-name.controller";

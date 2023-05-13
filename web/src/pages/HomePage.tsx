@@ -1,12 +1,12 @@
 import { Col, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
-import { useGetProductsQuery } from "../hooks/productHooks";
-import { getError } from "../utils/utils";
-import { ApiErrorType } from "../types/ApiError";
+import { ControlledCarousel } from "../components/Carousel";
 import { LoadingBox } from "../components/LoadingBox";
 import { MessageBox } from "../components/MessageBox";
 import { ProductItem } from "../components/ProductItem";
-import { ControlledCarousel } from "../components/Carousel";
+import { useGetProductsQuery } from "../hooks/productHooks";
+import { ApiErrorType } from "../types/ApiError";
+import { getError } from "../utils/utils";
 
 export function HomePage() {
   const { data: products, isLoading, error } = useGetProductsQuery();

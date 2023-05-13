@@ -2,6 +2,7 @@ import * as express from "express";
 import { authMiddleware } from "../middleware/auth";
 import {
   createOrderController,
+  getByNameController,
   getBySlugController,
   getCategoriesController,
   getOrderController,
@@ -30,4 +31,5 @@ router.get("/order/:id", authMiddleware, getOrderController);
 router.get("/products", getProductsController);
 router.get("/categories", getCategoriesController);
 router.get("/slug/:slug", getBySlugController);
+router.get("/search/:query", getByNameController);
 router.get("/seed", seedController);

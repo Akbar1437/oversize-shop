@@ -40,9 +40,15 @@ export function ProductItem({ product }: { product: ProductType }) {
 
   // ---------------------------------------------------------------------------
   return (
-    <Card>
+    <Card style={{ marginBottom: "2rem" }}>
       <Link to={`/product/${product.slug}`}>
-        <img src={product.image} alt={product.name} className="card-img-top" />
+        <img
+          src={product.image}
+          alt={product.name}
+          className="card-img-top"
+          width={400}
+          height={300}
+        />
       </Link>
       <Card.Body>
         <Link to={`/product/${product.slug}`}>

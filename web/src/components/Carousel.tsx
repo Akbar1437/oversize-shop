@@ -12,7 +12,10 @@ export function ControlledCarousel({ products }: { products: ProductType[] }) {
   return (
     <Carousel activeIndex={index} onSelect={handleSelect}>
       {products.map((product) => (
-        <Carousel.Item style={{ height: "100%", marginBottom: "3rem" }}>
+        <Carousel.Item
+          key={product._id}
+          style={{ height: "100%", marginBottom: "3rem" }}
+        >
           <img
             className="d-block w-100"
             src={product.image}

@@ -25,12 +25,14 @@ import { ProfilePage } from "./pages/ProfilePage.tsx";
 import { ShippingAddressPage } from "./pages/ShippingAddressPage.tsx";
 import { SigninPage } from "./pages/SigninPage.tsx";
 import { SignupPage } from "./pages/SignupPage.tsx";
+import { SearchProductPage } from "./pages/SearchProductPage.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} element={<HomePage />} />
       <Route path="product/:slug" element={<ProductPage />} />
+      <Route path="search/:query" element={<SearchProductPage />} />
       <Route path="cart" element={<CartPage />} />
       <Route path="signin" element={<SigninPage />} />
       <Route path="signup" element={<SignupPage />} />

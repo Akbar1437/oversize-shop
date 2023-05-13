@@ -18,7 +18,6 @@ import { useStore } from "./store-context";
 import { LoadingBox } from "./components/LoadingBox";
 import { MessageBox } from "./components/MessageBox";
 import { SearchBox } from "./components/SearchBox";
-import { ControlledCarousel } from "./components/Carousel";
 
 export function App() {
   // ---------------------------------------------------------------------------
@@ -141,13 +140,13 @@ export function App() {
               >
                 <i className="fas fa-bars"></i>
               </Link>
-              {["NEW", "STOCK", "PRESENT"].map((x) => (
+              {["NEW", "STOCK", "PRESENT"].map((item) => (
                 <Link
-                  key={x}
+                  key={item}
                   className="nav-link header-link p-1 px-3"
-                  to={`/search?tag=${x}`}
+                  to={`/search?/${item}`}
                 >
-                  {x}
+                  {item}
                 </Link>
               ))}
             </div>
