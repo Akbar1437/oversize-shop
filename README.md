@@ -4,10 +4,25 @@ MERN stack (MongoDB, ExpressJS, React and Node.JS)
 
 ## installation
 
-Before you start you need to clone the itn repository and run itn core services on your local machine.
-Run in the root directory of the cloned repository:
+Before start you need to clone the this repository on your local machine.
 
-## Run Backend
+```shell
+git@github.com:Akbar1437/oversize-shop.git
+```
+
+After need to make:
+
+## create .env file
+
+duplicate .env.dist in sever folder and rename it to .env
+
+## setup MongoDB
+
+Atlas Cloud MongoDB
+Create database at https://cloud.mongodb.com
+In .env file update MONGODB_URI=mongodb+srv://your-db-connection
+
+## run Backend
 
 ```shell
 cd server
@@ -21,7 +36,7 @@ npm install
 npm start
 ```
 
-## Run Frontend
+## run Frontend
 
 ```shell
 cd web
