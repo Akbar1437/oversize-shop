@@ -1,10 +1,10 @@
 import { Col, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { LoadingBox } from "../components/LoadingBox";
 import { MessageBox } from "../components/MessageBox";
 import { ProductItem } from "../components/ProductItem";
-import { useSearchProductByNameQuery } from "../hooks/productHooks";
+import { useSearchProductQuery } from "../hooks/productHooks";
 import { ApiErrorType } from "../types/ApiError";
 import { getError } from "../utils/utils";
 
@@ -13,14 +13,12 @@ export function SearchProductPage() {
   // variables
   // ---------------------------------------------------------------------------
 
-  const params = useParams();
-  const { query } = params;
+  const { search } = useLocation();
+  const query = search.split("=").slice(-1)[0];
 
-  const {
-    data: products,
-    isLoading,
-    error,
-  } = useSearchProductByNameQuery(query!);
+  console.log("query", query);
+
+  const { data: products, isLoading, error } = useSearchProductQuery(query);
 
   // ---------------------------------------------------------------------------
   // functions

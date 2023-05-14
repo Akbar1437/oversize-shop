@@ -9,11 +9,13 @@ export const sampleProducts: Product[] = [
     category: "Pants",
     image: "../public/images/p1.jpg",
     price: 220,
-    countInStock: 0,
+    countInStock: 24,
     brand: "Levi Strauss & Co",
     rating: 4.7,
     numReviews: 17,
     description: "high quality product",
+    isSale: true,
+    isNew: false,
   },
   {
     name: "Lacoste Pants",
@@ -21,11 +23,13 @@ export const sampleProducts: Product[] = [
     category: "Pants",
     image: "../public/images/p2.jpg",
     price: 229,
-    countInStock: 0,
+    countInStock: 16,
     brand: "Lacoste",
     rating: 4.5,
     numReviews: 17,
     description: "high quality product",
+    isSale: true,
+    isNew: false,
   },
   {
     name: "Ralph Lauren Pant",
@@ -38,6 +42,8 @@ export const sampleProducts: Product[] = [
     rating: 4.8,
     numReviews: 14,
     description: "high quality product",
+    isSale: true,
+    isNew: false,
   },
   {
     name: "Nike Slim Pant",
@@ -50,6 +56,8 @@ export const sampleProducts: Product[] = [
     rating: 4.5,
     numReviews: 14,
     description: "high quality product",
+    isSale: true,
+    isNew: false,
   },
   {
     name: "BAGGY Pant",
@@ -57,11 +65,13 @@ export const sampleProducts: Product[] = [
     category: "Pants",
     image: "../public/images/p5.jpg",
     price: 75,
-    countInStock: 12,
+    countInStock: 0,
     brand: "Baggy",
     rating: 4.5,
     numReviews: 14,
     description: "high quality product",
+    isSale: false,
+    isNew: false,
   },
   {
     name: "CARGO Pant",
@@ -74,6 +84,8 @@ export const sampleProducts: Product[] = [
     rating: 4.5,
     numReviews: 14,
     description: "high quality product",
+    isSale: false,
+    isNew: true,
   },
   {
     name: "CARGO Pant",
@@ -86,6 +98,8 @@ export const sampleProducts: Product[] = [
     rating: 4.5,
     numReviews: 12,
     description: "high quality product",
+    isSale: false,
+    isNew: true,
   },
 
   {
@@ -99,6 +113,8 @@ export const sampleProducts: Product[] = [
     rating: 4.7,
     numReviews: 13,
     description: "high quality shirt",
+    isSale: false,
+    isNew: false,
   },
   {
     name: "Nike Slim shirt",
@@ -111,6 +127,8 @@ export const sampleProducts: Product[] = [
     rating: 4.5,
     numReviews: 10,
     description: "high quality shirt",
+    isSale: false,
+    isNew: false,
   },
   {
     name: "Nike Slim shirt",
@@ -123,6 +141,8 @@ export const sampleProducts: Product[] = [
     rating: 4.5,
     numReviews: 10,
     description: "high quality shirt",
+    isSale: false,
+    isNew: false,
   },
   {
     name: "Adidas Fit Shirt",
@@ -135,6 +155,8 @@ export const sampleProducts: Product[] = [
     rating: 4.6,
     numReviews: 10,
     description: "high quality product",
+    isSale: true,
+    isNew: false,
   },
   {
     name: "Uniqlo Shirt",
@@ -147,6 +169,8 @@ export const sampleProducts: Product[] = [
     rating: 4.5,
     numReviews: 10,
     description: "high quality product",
+    isSale: false,
+    isNew: true,
   },
   {
     name: "Adidas Fit Shirt",
@@ -159,6 +183,8 @@ export const sampleProducts: Product[] = [
     rating: 4.0,
     numReviews: 10,
     description: "high quality product",
+    isSale: false,
+    isNew: true,
   },
   {
     name: "MANGA Shirt",
@@ -166,11 +192,13 @@ export const sampleProducts: Product[] = [
     category: "Shirts",
     image: "../public/images/s7.jpg",
     price: 150,
-    countInStock: 20,
+    countInStock: 0,
     brand: "Manga",
     rating: 4.0,
     numReviews: 10,
     description: "high quality product",
+    isSale: false,
+    isNew: false,
   },
   {
     name: "MANGA Shirt",
@@ -183,6 +211,8 @@ export const sampleProducts: Product[] = [
     rating: 4.0,
     numReviews: 10,
     description: "high quality product",
+    isSale: true,
+    isNew: false,
   },
   {
     name: "MANGA Shirt",
@@ -195,6 +225,8 @@ export const sampleProducts: Product[] = [
     rating: 4.0,
     numReviews: 10,
     description: "high quality product",
+    isSale: true,
+    isNew: false,
   },
   {
     name: "MANGA Shirt",
@@ -207,6 +239,8 @@ export const sampleProducts: Product[] = [
     rating: 4.0,
     numReviews: 10,
     description: "high quality product",
+    isSale: true,
+    isNew: false,
   },
   {
     name: "Calvin Klein Shirt",
@@ -219,6 +253,8 @@ export const sampleProducts: Product[] = [
     rating: 4.4,
     numReviews: 15,
     description: "high quality product",
+    isSale: false,
+    isNew: true,
   },
   {
     name: "Frame Shirt",
@@ -231,6 +267,8 @@ export const sampleProducts: Product[] = [
     rating: 4.0,
     numReviews: 10,
     description: "high quality product",
+    isSale: false,
+    isNew: true,
   },
   {
     name: "Frame Shirt",
@@ -243,6 +281,8 @@ export const sampleProducts: Product[] = [
     rating: 4.0,
     numReviews: 10,
     description: "high quality product",
+    isSale: false,
+    isNew: false,
   },
   {
     name: "OVERSİZE Shirt",
@@ -255,6 +295,8 @@ export const sampleProducts: Product[] = [
     rating: 4.2,
     numReviews: 10,
     description: "high quality product",
+    isSale: false,
+    isNew: false,
   },
   {
     name: "OVERSİZE Shirt",
@@ -267,6 +309,8 @@ export const sampleProducts: Product[] = [
     rating: 4.2,
     numReviews: 10,
     description: "high quality product",
+    isSale: false,
+    isNew: false,
   },
 ];
 

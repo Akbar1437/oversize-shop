@@ -8,23 +8,43 @@ export async function getByNameController(
 ) {
   handler(request, response, async () => {
     const { query } = request.params;
-    console.log("query", query);
+
+    if (!query) {
+      throw new Error("query params is empty");
+    }
+    const queryToLowerCase = query.toLocaleLowerCase();
 
     const products = await ProductModel.find();
 
-    console.log("products", products);
+    if (queryToLowerCase.includes("sale")) {
+      return products.filter((product) => product.isSale === true);
+    }
+
+    if (queryToLowerCase.includes("deals")) {
+      return products.filter((product) => product.isNew === true);
+    }
+
+    if (queryToLowerCase.includes("pants")) {
+      return products.filter((product) =>
+        product.category.toLocaleLowerCase().includes(queryToLowerCase)
+      );
+    }
+
+    if (queryToLowerCase.includes("shirts")) {
+      return products.filter((product) =>
+        product.category.toLocaleLowerCase().includes(queryToLowerCase)
+      );
+    }
 
     const filtered = products.filter(
       (product) =>
-        product.name.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) !==
-        -1
+        product.name.toLocaleLowerCase().indexOf(queryToLowerCase) !== -1
     );
-
-    console.log("filtered", filtered);
 
     if (!filtered) {
       throw new Error("Product Not Found");
     }
+
     return filtered;
   });
 }

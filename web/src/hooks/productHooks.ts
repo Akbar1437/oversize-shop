@@ -21,9 +21,14 @@ export const useGetCategoriesQuery = () =>
     queryFn: async () => (await apiClient.get<[]>(`/categories`)).data,
   });
 
-export const useSearchProductByNameQuery = (query: string) =>
-  useQuery({
+export const useSearchProductQuery = (query: string) => {
+  console.log("query", query);
+
+  return useQuery({
     queryKey: ["search", query],
     queryFn: async () =>
       (await apiClient.get<ProductType[]>(`/search/${query}`)).data,
+
+    enabled: query === "" ? false : true,
   });
+};

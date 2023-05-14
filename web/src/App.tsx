@@ -8,7 +8,7 @@ import {
   Navbar,
 } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useGetCategoriesQuery } from "./hooks/productHooks";
@@ -27,6 +27,8 @@ export function App() {
     state: { mode, cart, userInfo },
     dispatch,
   } = useStore();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const { data: categories, isLoading, error } = useGetCategoriesQuery();
@@ -136,15 +138,21 @@ export function App() {
               <Link
                 to="#"
                 className="nav-link header-link p-2"
-                onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
+                onClick={() => {
+                  setSidebarIsOpen(!sidebarIsOpen);
+                  if (location.pathname === "/search") {
+                    navigate("/");
+                  }
+                }}
               >
                 <i className="fas fa-bars"></i>
               </Link>
-              {["NEW", "STOCK", "PRESENT"].map((item) => (
+
+              {["DEALS", "SALE", "PRESENT"].map((item) => (
                 <Link
                   key={item}
                   className="nav-link header-link p-1 px-3"
-                  to={`/search?/${item}`}
+                  to={{ pathname: "/search", search: `/tag=${item}` }}
                 >
                   {item}
                 </Link>

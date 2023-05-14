@@ -10,4 +10,6 @@ export type ProductType = {
   description: string;
   rating: number;
   numReviews: number;
+  isSale: boolean;
+  isNew: boolean;
 };

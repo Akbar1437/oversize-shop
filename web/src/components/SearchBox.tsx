@@ -27,7 +27,7 @@ export function SearchBox() {
 
   function submitHandler(event: React.SyntheticEvent) {
     event.preventDefault();
-    navigate(query ? `/search/${query}` : "/search");
+    navigate(query ? `/search?search=${query}` : "/search");
   }
 
   // ---------------------------------------------------------------------------
