@@ -5,20 +5,20 @@ import { ProductType } from "../types/Product";
 export const useGetProductsQuery = () =>
   useQuery({
     queryKey: ["products"],
-    queryFn: async () => (await apiClient.get<ProductType[]>(`/products`)).data,
+    queryFn: async () => (await apiClient.get<ProductType[]>(`api/products`)).data,
   });
 
 export const useGetProductDetailsBySlugQuery = (slug: string) =>
   useQuery({
     queryKey: ["slug", slug],
     queryFn: async () =>
-      (await apiClient.get<ProductType>(`/slug/${slug}`)).data,
+      (await apiClient.get<ProductType>(`api/slug/${slug}`)).data,
   });
 
 export const useGetCategoriesQuery = () =>
   useQuery({
     queryKey: ["categories"],
-    queryFn: async () => (await apiClient.get<[]>(`/categories`)).data,
+    queryFn: async () => (await apiClient.get<[]>(`api/categories`)).data,
   });
 
 export const useSearchProductQuery = (query: string) => {
@@ -27,7 +27,7 @@ export const useSearchProductQuery = (query: string) => {
   return useQuery({
     queryKey: ["search", query],
     queryFn: async () =>
-      (await apiClient.get<ProductType[]>(`/search/${query}`)).data,
+      (await apiClient.get<ProductType[]>(`api/search/${query}`)).data,
 
     enabled: query === "" ? false : true,
   });

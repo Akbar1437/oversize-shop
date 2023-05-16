@@ -10,7 +10,7 @@ export const generateToken = (user: User) => {
       email: user.email,
       isAdmin: user.isAdmin,
     },
-    process.env.JWT_SECRET || "something_secret",
+    process.env.JWT_SECRET || "secret_jwt_key",
     { expiresIn: "30d" }
   );
 };

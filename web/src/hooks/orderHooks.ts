@@ -6,14 +6,15 @@ import { CartItemType, ShippingAddressType } from "../types/Cart";
 export const useGetOrderDetailsQuery = (id: string) =>
   useQuery({
     queryKey: ["order", id],
-    queryFn: async () => (await apiClient.get<OrderType>(`/order/${id}`)).data,
+    queryFn: async () =>
+      (await apiClient.get<OrderType>(`api/order/${id}`)).data,
   });
 
 export const useGetPaypalClientIdQuery = () =>
   useQuery({
     queryKey: ["paypal-clientId"],
     queryFn: async () =>
-      (await apiClient.get<{ clientId: string }>(`/keys/paypal`)).data,
+      (await apiClient.get<{ clientId: string }>(`api/keys/paypal`)).data,
   });
 
 export const usePayOrderMutation = () =>
@@ -21,7 +22,7 @@ export const usePayOrderMutation = () =>
     mutationFn: async (details: { orderId: string }) =>
       (
         await apiClient.put<{ message: string; order: OrderType }>(
-          `/order/${details.orderId}/pay`,
+          `api/order/${details.orderId}/pay`,
           details
         )
       ).data,
@@ -40,7 +41,7 @@ export const useCreateOrderMutation = () =>
     }) =>
       (
         await apiClient.post<{ message: string; order: OrderType }>(
-          `/order`,
+          `api/order`,
           order
         )
       ).data,
@@ -49,5 +50,6 @@ export const useCreateOrderMutation = () =>
 export const useGetOrderHistoryQuery = () =>
   useQuery({
     queryKey: ["order-history"],
-    queryFn: async () => (await apiClient.get<OrderType[]>(`/order/mine`)).data,
+    queryFn: async () =>
+      (await apiClient.get<OrderType[]>(`api/order/mine`)).data,
   });

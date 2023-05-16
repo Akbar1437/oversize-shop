@@ -38,7 +38,7 @@ export class Product {
   public isSale!: boolean;
 
   @prop({ required: true, default: false })
-  public isNew!: boolean;
+  public isLatest!: boolean;
 }
 
 export const ProductModel = getModelForClass(Product);

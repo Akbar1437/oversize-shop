@@ -1,4 +1,3 @@
-import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useGetProductDetailsBySlugQuery } from "../hooks/productHooks";
 import { useNavigate, useParams } from "react-router-dom";

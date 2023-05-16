@@ -11,5 +11,5 @@ export type ProductType = {
   rating: number;
   numReviews: number;
   isSale: boolean;
-  isNew: boolean;
+  isLatest: boolean;
 };

@@ -21,7 +21,7 @@ export async function getByNameController(
     }
 
     if (queryToLowerCase.includes("deals")) {
-      return products.filter((product) => product.isNew === true);
+      return products.filter((product) => product.isLatest === true);
     }
 
     if (queryToLowerCase.includes("pants")) {

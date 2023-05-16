@@ -1,0 +1,20 @@
+{
+  "name": "oversize",
+  "version": "1.0.0",
+  "description": "MERN stack (MongoDB, ExpressJS, React and Node.JS)",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd web && npm install && npm run build && cd ../server && npm install && npm run build",
+    "start": "TG_ALLOW_MIXED=ALLOW  node server/build/src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akbar1437/oversize-shop.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Akbar1437/oversize-shop/issues"
+  },
+  "homepage": "https://github.com/Akbar1437/oversize-shop#readme"
+}

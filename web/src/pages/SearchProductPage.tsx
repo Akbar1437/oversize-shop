@@ -1,6 +1,6 @@
 import { Col, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { LoadingBox } from "../components/LoadingBox";
 import { MessageBox } from "../components/MessageBox";
 import { ProductItem } from "../components/ProductItem";
