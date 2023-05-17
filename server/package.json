@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -b -w",
+    "build": "tsc",
     "dev": "ts-node-dev --respawn --transpile-only --files src/index.ts",
+    "watch": "tsc -b -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
