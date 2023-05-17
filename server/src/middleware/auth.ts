@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
+import { Config } from "../app/config";
 
 export const authMiddleware = (
   req: Request,
@@ -9,7 +10,7 @@ export const authMiddleware = (
   const { authorization } = req.headers;
   if (authorization) {
     const token = authorization.slice(7, authorization.length);
-    const decode = jwt.verify(token, process.env.JWT_SECRET!);
+    const decode = jwt.verify(token, Config.JWT_SECRET);
     req.user = decode as {
       _id: string;
       name: string;

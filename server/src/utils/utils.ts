@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { User } from "../models/user.model";
+import { Config } from "../app/config";
 
 export const generateToken = (user: User) => {
   return jwt.sign(
@@ -10,7 +11,7 @@ export const generateToken = (user: User) => {
       email: user.email,
       isAdmin: user.isAdmin,
     },
-    process.env.JWT_SECRET || "secret_jwt_key",
+    Config.JWT_SECRET,
     { expiresIn: "30d" }
   );
 };

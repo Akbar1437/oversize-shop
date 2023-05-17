@@ -182,9 +182,7 @@ export function App() {
               to={userInfo ? `/profile` : `/signin`}
               onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
             >
-              <span>
-                {userInfo ? `Hello, ${userInfo.name}` : `Hello, sign in`}
-              </span>
+              <span>{userInfo ? `Hello, ${userInfo.name}` : `sign in`}</span>
             </LinkContainer>
           </ListGroup.Item>
           <ListGroup.Item>

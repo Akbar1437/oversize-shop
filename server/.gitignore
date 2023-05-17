@@ -7,4 +7,6 @@ uploads/*
 npm-debug.log
 tsconfig.tsbuildinfo
 .env
-/deploy/helm-output/
+/deploy/helm-output
+
+/src/app/config.ts
