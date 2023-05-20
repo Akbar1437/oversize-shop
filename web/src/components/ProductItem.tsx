@@ -51,7 +51,10 @@ export function ProductItem({ product }: { product: ProductType }) {
         />
       </Link>
       <Card.Body>
-        <Link to={`/product/${product.slug}`}>
+        <Link
+          to={`/product/${product.slug}`}
+          style={{ textDecoration: "none" }}
+        >
           <Card.Title>{product.name}</Card.Title>
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />

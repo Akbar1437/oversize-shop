@@ -70,8 +70,8 @@ export function App() {
             </LinkContainer>
             <SearchBox />
 
-            <Navbar.Collapse>
-              <Nav className="w-100 justify-content-end">
+            <Navbar.Text style={{ marginLeft: "1rem" }}>
+              <Nav className="w-100 justify-content-center">
                 <Link
                   to="#"
                   className="nav-link header-link"
@@ -105,7 +105,7 @@ export function App() {
                     </Link>
                   </NavDropdown>
                 ) : (
-                  <NavDropdown className="header-link" title={`Hello, sign in`}>
+                  <NavDropdown className="header-link" title={`sign in`}>
                     <LinkContainer to="/signin">
                       <NavDropdown.Item>Sign In</NavDropdown.Item>
                     </LinkContainer>
@@ -131,8 +131,9 @@ export function App() {
                   <span>Cart</span>
                 </Link>
               </Nav>
-            </Navbar.Collapse>
+            </Navbar.Text>
           </div>
+
           <div className="sub-header mt-3">
             <div className="d-flex align-items-center">
               <Link
@@ -178,16 +179,13 @@ export function App() {
       >
         <ListGroup variant="flush">
           <ListGroup.Item action className="side-navbar-user">
-            <LinkContainer
-              to={userInfo ? `/profile` : `/signin`}
-              onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
-            >
-              <span>{userInfo ? `Hello, ${userInfo.name}` : `sign in`}</span>
-            </LinkContainer>
-          </ListGroup.Item>
-          <ListGroup.Item>
             <div className="d-flex justify-content-between align-items-center">
-              <strong>Categories</strong>
+              <LinkContainer
+                to={userInfo ? `/profile` : `/signin`}
+                onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
+              >
+                <span>{userInfo ? `Hello, ${userInfo.name}` : `sign in`}</span>
+              </LinkContainer>
               <Button
                 variant={mode}
                 onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
