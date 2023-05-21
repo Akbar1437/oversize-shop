@@ -1,6 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import apiClient from "../http/apiClient";
 import { UserInfoType } from "../types/UserInfo";
+import { UserType } from "../types/User";
 
 export const useSigninMutation = () =>
   useMutation({
@@ -57,4 +58,39 @@ export const useUpdateProfileMutation = () =>
           password,
         })
       ).data,
+  });
+
+export const useGetUsersQuery = () =>
+  useQuery({
+    queryKey: ["users"],
+    queryFn: async () => (await apiClient.get<[UserType]>(`api/users`)).data,
+  });
+
+export const useDeleteUserMutation = () =>
+  useMutation({
+    mutationFn: async (userId: string) =>
+      (await apiClient.delete<{ message: string }>(`api/users/${userId}`)).data,
+  });
+
+export const useUpdateUserMutation = () =>
+  useMutation({
+    mutationFn: async (user: {
+      _id: string;
+      name: string;
+      email: string;
+      isAdmin: boolean;
+    }) =>
+      (
+        await apiClient.put<{ user: UserType; message: string }>(
+          `api/users/${user._id}`,
+          user
+        )
+      ).data,
+  });
+
+export const useGetUserDetailsQuery = (userId: string) =>
+  useQuery({
+    queryKey: ["users", userId],
+    queryFn: async () =>
+      (await apiClient.get<UserType>(`api/users/${userId}`)).data,
   });

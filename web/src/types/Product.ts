@@ -12,4 +12,16 @@ export type ProductType = {
   numReviews: number;
   isSale: boolean;
   isLatest: boolean;
+  banner: string;
+  reviews: ReviewType[];
+  images: string[];
+  isFeatured: boolean;
+};
+
+export type ReviewType = {
+  _id: string;
+  createdAt: string;
+  name: string;
+  rating: number;
+  comment: string;
 };

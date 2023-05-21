@@ -28,6 +28,11 @@ import { SignupPage } from "./pages/SignupPage.tsx";
 import { SearchProductPage } from "./pages/SearchProductPage.tsx";
 import { AdminRoute } from "./components/AdminRoute.tsx";
 import { DashboardPage } from "./pages/DashboardPage.tsx";
+import { UserListPage } from "./pages/UserListPage.tsx";
+import { UserEditPage } from "./pages/UserEditPage.tsx";
+import { ProductListPage } from "./pages/ProductListPage.tsx";
+import { ProductEditPage } from "./pages/ProductEditPage.tsx";
+import { OrderListPage } from "./pages/OrderListPage.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -51,11 +56,11 @@ const router = createBrowserRouter(
       {/* Admin Users */}
       <Route path="/admin" element={<AdminRoute />}>
         <Route path="dashboard" element={<DashboardPage />} />
-        {/* <Route path="users" element={<UserListPage />} />
+        <Route path="users" element={<UserListPage />} />
         <Route path="user/:id" element={<UserEditPage />} />
         <Route path="products" element={<ProductListPage />} />
         <Route path="product/:id" element={<ProductEditPage />} />
-        <Route path="orders" element={<OrderListPage />} /> */}
+        <Route path="orders" element={<OrderListPage />} />
       </Route>
     </Route>
   )

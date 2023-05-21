@@ -67,3 +67,16 @@ export const useGetOrderSummaryQuery = () =>
         }>(`api/orders/summary`)
       ).data,
   });
+
+export const useGetOrdersQuery = () =>
+  useQuery({
+    queryKey: ["orders"],
+    queryFn: async () => (await apiClient.get<[OrderType]>(`api/orders`)).data,
+  });
+
+export const useDeleteOrderMutation = () =>
+  useMutation({
+    mutationFn: async (orderId: string) =>
+      (await apiClient.delete<{ message: string }>(`api/orders/${orderId}`))
+        .data,
+  });
