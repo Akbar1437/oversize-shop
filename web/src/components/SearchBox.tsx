@@ -32,11 +32,7 @@ export function SearchBox() {
 
   // ---------------------------------------------------------------------------
   return (
-    <Form
-      style={{ marginLeft: "3rem" }}
-      className="flex-grow-1 d-flex me-auto"
-      onSubmit={submitHandler}
-    >
+    <Form className="flex-grow-1 d-flex me-auto" onSubmit={submitHandler}>
       <InputGroup>
         <FormControl
           type="text"

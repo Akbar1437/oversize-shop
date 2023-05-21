@@ -4,6 +4,7 @@ import { UserInfoType } from "../types/UserInfo";
 
 export type AppStateType = {
   mode: string;
+  fullBox: boolean;
   cart: CartType;
   userInfo?: UserInfoType;
 };
@@ -19,7 +20,7 @@ export const initialState: AppStateType = {
       window.matchMedia("(prefers-color-scheme: dark)").matches
     ? "dark"
     : "light",
-
+  fullBox: false,
   cart: {
     cartItems: localStorage.getItem("cartItems")
       ? JSON.parse(localStorage.getItem("cartItems")!)
@@ -39,6 +40,8 @@ export const initialState: AppStateType = {
 
 export type ActionType =
   | { type: "SWITCH_MODE" }
+  | { type: "SET_FULLBOX_ON" }
+  | { type: "SET_FULLBOX_OFF" }
   | { type: "CART_ADD_ITEM"; payload: CartItemType }
   | { type: "CART_REMOVE_ITEM"; payload: CartItemType }
   | { type: "CART_CLEAR" }

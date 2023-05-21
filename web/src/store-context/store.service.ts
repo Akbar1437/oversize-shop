@@ -61,6 +61,7 @@ export function reducer(state: AppStateType, action: ActionType): AppStateType {
 
     case "USER_SIGNOUT":
       return {
+        ...state,
         mode:
           window.matchMedia &&
           window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -105,6 +106,11 @@ export function reducer(state: AppStateType, action: ActionType): AppStateType {
         ...state,
         cart: { ...state.cart, paymentMethod: action.payload },
       };
+
+    case "SET_FULLBOX_ON":
+      return { ...state, fullBox: true };
+    case "SET_FULLBOX_OFF":
+      return { ...state, fullBox: false };
 
     // ---------------------------------------------------------------------------
     // default

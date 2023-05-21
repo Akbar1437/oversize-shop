@@ -1,77 +1,72 @@
 import { useEffect, useState } from "react";
-import {
-  Button,
-  Container,
-  ListGroup,
-  Nav,
-  NavDropdown,
-  Navbar,
-} from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import { useGetCategoriesQuery } from "./hooks/productHooks";
-import { ApiErrorType } from "./types/ApiError";
-import { getError } from "./utils/utils";
+
+import { ListGroup } from "react-bootstrap";
 import { useStore } from "./store-context";
 import { LoadingBox } from "./components/LoadingBox";
 import { MessageBox } from "./components/MessageBox";
 import { SearchBox } from "./components/SearchBox";
+import { getError } from "./utils/utils";
+import { ApiErrorType } from "./types/ApiError";
 
 export function App() {
-  // ---------------------------------------------------------------------------
-  // variables
-  // ---------------------------------------------------------------------------
-  const {
-    state: { mode, cart, userInfo },
-    dispatch,
-  } = useStore();
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
-  const { data: categories, isLoading, error } = useGetCategoriesQuery();
-
-  // ---------------------------------------------------------------------------
-  // effects
-  // ---------------------------------------------------------------------------
+  const { state, dispatch } = useStore();
+  const { mode, fullBox, cart, userInfo } = state;
 
   useEffect(() => {
     document.body.setAttribute("data-bs-theme", mode);
   }, [mode]);
 
-  // ---------------------------------------------------------------------------
-  // functions
-  // ---------------------------------------------------------------------------
-
-  function signoutHandler() {
+  const signoutHandler = () => {
     dispatch({ type: "USER_SIGNOUT" });
     localStorage.removeItem("userInfo");
-    localStorage.removeItem("cartItems");
     localStorage.removeItem("shippingAddress");
     localStorage.removeItem("paymentMethod");
     window.location.href = "/signin";
-  }
-  // ---------------------------------------------------------------------------
+  };
+  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+
+  const { data: categories, isLoading, error } = useGetCategoriesQuery();
+
   return (
-    <div className="d-flex flex-column vh-100">
+    <div
+      className={
+        sidebarIsOpen
+          ? fullBox
+            ? "site-container active-cont d-flex flex-column full-box"
+            : "site-container active-cont d-flex flex-column"
+          : fullBox
+          ? "site-container d-flex flex-column full-box"
+          : "site-container d-flex flex-column"
+      }
+    >
       <ToastContainer position="bottom-center" limit={1} />
       <header>
         <Navbar
-          className="d-flex flex-column align-items-stretch p-2 pb-0 mb-4"
+          className="d-flex flex-column align-items-stretch p-2 pb-0 mb-3 "
           bg="dark"
           variant="dark"
           expand="lg"
         >
-          <div className="d-flex justify-content-between align-items-center">
-            <LinkContainer to="/" className="header-link">
-              <Navbar.Brand>Oversize XXL</Navbar.Brand>
-            </LinkContainer>
-            <SearchBox />
-
-            <Navbar.Text style={{ marginLeft: "1rem" }}>
-              <Nav className="w-100 justify-content-center">
+          <div className="d-flex justify-content-between align-items-center flex-wrap">
+            <div className="d-flex justify-content-between align-items-center">
+              <LinkContainer to="/" className="header-link">
+                <Navbar.Brand>Oversize XXL</Navbar.Brand>
+              </LinkContainer>
+              <SearchBox />
+            </div>
+            <Navbar.Collapse>
+              <Nav className="w-100 justify-content-end">
                 <Link
                   to="#"
                   className="nav-link header-link"
@@ -86,7 +81,7 @@ export function App() {
                 {userInfo ? (
                   <NavDropdown
                     className="header-link"
-                    title={` ${userInfo.name}`}
+                    title={`${userInfo.name}`}
                   >
                     <LinkContainer to="/profile">
                       <NavDropdown.Item>User Profile</NavDropdown.Item>
@@ -100,14 +95,29 @@ export function App() {
                       to="#signout"
                       onClick={signoutHandler}
                     >
-                      {" "}
-                      Sign Out{" "}
+                      Sign Out
                     </Link>
                   </NavDropdown>
                 ) : (
                   <NavDropdown className="header-link" title={`sign in`}>
                     <LinkContainer to="/signin">
                       <NavDropdown.Item>Sign In</NavDropdown.Item>
+                    </LinkContainer>
+                  </NavDropdown>
+                )}
+                {userInfo && userInfo.isAdmin && (
+                  <NavDropdown className="header-link" title="Admin">
+                    <LinkContainer to="/admin/dashboard">
+                      <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/admin/products">
+                      <NavDropdown.Item>Products</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/admin/orders">
+                      <NavDropdown.Item>Orders</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/admin/users">
+                      <NavDropdown.Item>Users</NavDropdown.Item>
                     </LinkContainer>
                   </NavDropdown>
                 )}
@@ -120,6 +130,7 @@ export function App() {
                       {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
                     </span>
                   }
+
                   <svg
                     fill="#ffffff"
                     viewBox="130 150 200 300"
@@ -128,32 +139,27 @@ export function App() {
                   >
                     <path d="M 110.164 188.346 C 104.807 188.346 100.437 192.834 100.437 198.337 C 100.437 203.84 104.807 208.328 110.164 208.328 L 131.746 208.328 L 157.28 313.233 C 159.445 322.131 167.197 328.219 176.126 328.219 L 297.409 328.219 C 306.186 328.219 313.633 322.248 315.951 313.545 L 341.181 218.319 L 320.815 218.319 L 297.409 308.237 L 176.126 308.237 L 150.592 203.332 C 148.426 194.434 140.675 188.346 131.746 188.346 L 110.164 188.346 Z M 285.25 328.219 C 269.254 328.219 256.069 341.762 256.069 358.192 C 256.069 374.623 269.254 388.165 285.25 388.165 C 301.247 388.165 314.431 374.623 314.431 358.192 C 314.431 341.762 301.247 328.219 285.25 328.219 Z M 197.707 328.219 C 181.711 328.219 168.526 341.762 168.526 358.192 C 168.526 374.623 181.711 388.165 197.707 388.165 C 213.704 388.165 226.888 374.623 226.888 358.192 C 226.888 341.762 213.704 328.219 197.707 328.219 Z M 197.707 348.201 C 203.179 348.201 207.434 352.572 207.434 358.192 C 207.434 363.812 203.179 368.183 197.707 368.183 C 192.236 368.183 187.98 363.812 187.98 358.192 C 187.98 352.572 192.236 348.201 197.707 348.201 Z M 285.25 348.201 C 290.722 348.201 294.977 352.572 294.977 358.192 C 294.977 363.812 290.722 368.183 285.25 368.183 C 279.779 368.183 275.523 363.812 275.523 358.192 C 275.523 352.572 279.779 348.201 285.25 348.201 Z" />
                   </svg>
+
                   <span>Cart</span>
                 </Link>
               </Nav>
-            </Navbar.Text>
+            </Navbar.Collapse>
           </div>
-
-          <div className="sub-header mt-3">
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <div className="sub-header d-flex justify-content-start align-items-center mt-2">
             <div className="d-flex align-items-center">
               <Link
                 to="#"
-                className="nav-link header-link p-2"
-                onClick={() => {
-                  setSidebarIsOpen(!sidebarIsOpen);
-                  if (location.pathname === "/search") {
-                    navigate("/");
-                  }
-                }}
+                className="nav-link header-link p-1 px-3"
+                onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
               >
                 <i className="fas fa-bars"></i>
               </Link>
-
               {["DEALS", "SALE", "PRESENT"].map((item) => (
                 <Link
                   key={item}
                   className="nav-link header-link p-1 px-3"
-                  to={{ pathname: "/search", search: `/tag=${item}` }}
+                  to={`/search?tag=${item}`}
                 >
                   {item}
                 </Link>
@@ -162,14 +168,12 @@ export function App() {
           </div>
         </Navbar>
       </header>
-
       {sidebarIsOpen && (
         <div
           onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
           className="side-navbar-backdrop"
         ></div>
       )}
-
       <div
         className={
           sidebarIsOpen
@@ -180,11 +184,12 @@ export function App() {
         <ListGroup variant="flush">
           <ListGroup.Item action className="side-navbar-user">
             <div className="d-flex justify-content-between align-items-center">
+              {" "}
               <LinkContainer
                 to={userInfo ? `/profile` : `/signin`}
                 onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
               >
-                <span>{userInfo ? `Hello, ${userInfo.name}` : `sign in`}</span>
+                <span>{userInfo ? userInfo.name : `sign in`}</span>
               </LinkContainer>
               <Button
                 variant={mode}
@@ -194,6 +199,7 @@ export function App() {
               </Button>
             </div>
           </ListGroup.Item>
+
           {isLoading ? (
             <LoadingBox />
           ) : error ? (
@@ -201,9 +207,7 @@ export function App() {
               {getError(error as ApiErrorType)}
             </MessageBox>
           ) : (
-            categories &&
-            categories.length &&
-            categories.map((category) => (
+            categories!.map((category) => (
               <ListGroup.Item action key={category}>
                 <LinkContainer
                   to={{ pathname: "/search", search: `category=${category}` }}
@@ -216,19 +220,13 @@ export function App() {
           )}
         </ListGroup>
       </div>
-
-      <main style={{ flexGrow: "1" }}>
-        <Container className="mt-3">
+      <main>
+        <Container fluid>
           <Outlet />
         </Container>
       </main>
-      <footer style={{ background: "#252e3d" }}>
-        <div
-          className="text-center"
-          style={{ color: "silver", padding: "1rem" }}
-        >
-          Copyright @2023 | All rights reserved
-        </div>
+      <footer>
+        <div className="text-center">All rights reserved</div>
       </footer>
     </div>
   );

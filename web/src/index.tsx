@@ -26,6 +26,8 @@ import { ShippingAddressPage } from "./pages/ShippingAddressPage.tsx";
 import { SigninPage } from "./pages/SigninPage.tsx";
 import { SignupPage } from "./pages/SignupPage.tsx";
 import { SearchProductPage } from "./pages/SearchProductPage.tsx";
+import { AdminRoute } from "./components/AdminRoute.tsx";
+import { DashboardPage } from "./pages/DashboardPage.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,6 +46,16 @@ const router = createBrowserRouter(
         <Route path="/order/:id" element={<OrderPage />} />
         <Route path="orderhistory" element={<OrderHistoryPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+      </Route>
+
+      {/* Admin Users */}
+      <Route path="/admin" element={<AdminRoute />}>
+        <Route path="dashboard" element={<DashboardPage />} />
+        {/* <Route path="users" element={<UserListPage />} />
+        <Route path="user/:id" element={<UserEditPage />} />
+        <Route path="products" element={<ProductListPage />} />
+        <Route path="product/:id" element={<ProductEditPage />} />
+        <Route path="orders" element={<OrderListPage />} /> */}
       </Route>
     </Route>
   )

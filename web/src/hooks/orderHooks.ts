@@ -53,3 +53,17 @@ export const useGetOrderHistoryQuery = () =>
     queryFn: async () =>
       (await apiClient.get<OrderType[]>(`api/order/mine`)).data,
   });
+
+export const useGetOrderSummaryQuery = () =>
+  useQuery({
+    queryKey: ["orders-summary"],
+    queryFn: async () =>
+      (
+        await apiClient.get<{
+          users: [{ numUsers: number }];
+          orders: [{ numOrders: number; totalSales: number }];
+          dailyOrders: [];
+          productCategories: [];
+        }>(`api/orders/summary`)
+      ).data,
+  });
