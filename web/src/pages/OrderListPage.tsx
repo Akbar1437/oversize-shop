@@ -9,6 +9,9 @@ import { ApiErrorType } from "../types/ApiError";
 import { useDeleteOrderMutation, useGetOrdersQuery } from "../hooks/orderHooks";
 
 export function OrderListPage() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
   const navigate = useNavigate();
 
   const { data: orders, isLoading, error, refetch } = useGetOrdersQuery();
@@ -16,18 +19,23 @@ export function OrderListPage() {
   const { mutateAsync: deleteOrder, isLoading: loadingDelete } =
     useDeleteOrderMutation();
 
-  const deleteHandler = async (id: string) => {
+  // ---------------------------------------------------------------------------
+  // functions
+  // ---------------------------------------------------------------------------
+
+  async function deleteHandler(id: string) {
     if (window.confirm("Are you sure to delete?")) {
       try {
-        deleteOrder(id);
-        refetch();
+        await deleteOrder(id);
+        await refetch();
         toast.success("Order deleted successfully");
       } catch (err) {
         toast.error(getError(err as ApiErrorType));
       }
     }
-  };
+  }
 
+  // ---------------------------------------------------------------------------
   return (
     <div>
       <Helmet>

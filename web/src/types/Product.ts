@@ -25,3 +25,15 @@ export type ReviewType = {
   rating: number;
   comment: string;
 };
+
+export type ProductInputType = {
+  name: string;
+  slug: string;
+  image: string;
+  category: string;
+  brand: string;
+  price: number;
+  countInStock: number;
+  description: string;
+  images: string[];
+};

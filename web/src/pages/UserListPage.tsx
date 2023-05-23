@@ -10,6 +10,9 @@ import { UserType } from "../types/User";
 import { useDeleteUserMutation, useGetUsersQuery } from "../hooks/userHooks";
 
 export function UserListPage() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
   const navigate = useNavigate();
 
   const { data: users, isLoading, error, refetch } = useGetUsersQuery();
@@ -17,18 +20,22 @@ export function UserListPage() {
   const { mutateAsync: deleteUser, isLoading: loadingDelete } =
     useDeleteUserMutation();
 
-  const deleteHandler = async (id: string) => {
+  // ---------------------------------------------------------------------------
+  // function
+  // ---------------------------------------------------------------------------
+  async function deleteHandler(id: string) {
     if (window.confirm("Are you sure to delete?")) {
       try {
-        deleteUser(id);
-        refetch();
+        await deleteUser(id);
+        await refetch();
         toast.success("Order deleted successfully");
       } catch (err) {
         toast.error(getError(err as ApiErrorType));
       }
     }
-  };
+  }
 
+  // ---------------------------------------------------------------------------
   return (
     <div>
       <Helmet>

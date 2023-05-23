@@ -16,13 +16,7 @@ export function SearchProductPage() {
   const { search } = useLocation();
   const query = search.split("=").slice(-1)[0];
 
-  console.log("query", query);
-
   const { data: products, isLoading, error } = useSearchProductQuery(query);
-
-  // ---------------------------------------------------------------------------
-  // functions
-  // ---------------------------------------------------------------------------
 
   // ---------------------------------------------------------------------------
   return isLoading ? (

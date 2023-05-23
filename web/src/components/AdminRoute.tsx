@@ -5,7 +5,7 @@ export function AdminRoute() {
   const {
     state: { userInfo },
   } = useStore();
-
+  // ---------------------------------------------------------------------------
   if (userInfo && userInfo.isAdmin) {
     return <Outlet />;
   } else {

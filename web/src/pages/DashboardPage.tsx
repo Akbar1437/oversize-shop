@@ -9,8 +9,12 @@ import { ApiErrorType } from "../types/ApiError";
 import { useGetOrderSummaryQuery } from "../hooks/orderHooks";
 
 export function DashboardPage() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
   const { data: summary, isLoading, error } = useGetOrderSummaryQuery();
 
+  // ---------------------------------------------------------------------------
   return (
     <div>
       <h1>Dashboard</h1>

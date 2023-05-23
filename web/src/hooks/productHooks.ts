@@ -43,7 +43,7 @@ export const useGetProductDetailsQuery = (id: string) =>
 
 // Admin
 
-export const useGetAdminProdcutsQuery = (page: number) =>
+export const useGetAdminProductsQuery = (page: number) =>
   useQuery({
     queryKey: ["admin-products", page],
     queryFn: async () =>

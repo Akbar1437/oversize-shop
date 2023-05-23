@@ -8,7 +8,7 @@ export function ControlledCarousel({ products }: { products: ProductType[] }) {
   const handleSelect = (selectedIndex: number) => {
     setIndex(selectedIndex);
   };
-
+  // ---------------------------------------------------------------------------
   return (
     <Carousel activeIndex={index} onSelect={handleSelect}>
       {products.map((product) => (

@@ -15,6 +15,9 @@ import {
 } from "../hooks/userHooks";
 
 export function UserEditPage() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
   const params = useParams();
   const { id: userId } = params;
   const navigate = useNavigate();
@@ -24,6 +27,12 @@ export function UserEditPage() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   const { data: user, isLoading, error } = useGetUserDetailsQuery(userId!);
+  const { mutateAsync: updateUser, isLoading: loadingUpdate } =
+    useUpdateUserMutation();
+
+  // ---------------------------------------------------------------------------
+  // effects
+  // ---------------------------------------------------------------------------
 
   useEffect(() => {
     if (user) {
@@ -33,11 +42,12 @@ export function UserEditPage() {
     }
   }, [user]);
 
-  const { mutateAsync: updateUser, isLoading: loadingUpdate } =
-    useUpdateUserMutation();
+  // ---------------------------------------------------------------------------
+  // functions
+  // ---------------------------------------------------------------------------
 
-  const submitHandler = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  async function submitHandler(event: React.SyntheticEvent) {
+    event.preventDefault();
     try {
       await updateUser({
         _id: userId!,
@@ -50,8 +60,9 @@ export function UserEditPage() {
     } catch (err) {
       toast.error(getError(err as ApiErrorType));
     }
-  };
+  }
 
+  // ---------------------------------------------------------------------------
   return (
     <Container className="small-container">
       <Helmet>

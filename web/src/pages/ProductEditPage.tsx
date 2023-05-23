@@ -15,75 +15,75 @@ import {
   useUpdateProductMutation,
   useUploadProductMutation,
 } from "../hooks/productHooks";
+import { ProductInputType } from "../types/Product";
 
 export function ProductEditPage() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
+
   const navigate = useNavigate();
   const params = useParams();
   const { id: productId } = params;
-
-  const [name, setName] = useState("");
-  const [slug, setSlug] = useState("");
-  const [price, setPrice] = useState(0);
-  const [image, setImage] = useState("");
-  const [images, setImages] = useState<string[]>([]);
-  const [category, setCategory] = useState("");
-  const [countInStock, setCountInStock] = useState(0);
-  const [brand, setBrand] = useState("");
-  const [description, setDescription] = useState("");
-
   const {
     data: product,
     isLoading,
     error,
   } = useGetProductDetailsQuery(productId!);
 
-  useEffect(() => {
-    if (product) {
-      setName(product.name);
-      setSlug(product.slug);
-      setPrice(product.price);
-      setImage(product.image);
-      setImages(product.images);
-      setCategory(product.category);
-      setCountInStock(product.countInStock);
-      setBrand(product.brand);
-      setDescription(product.description);
-    }
-  }, [product]);
-
   const { mutateAsync: updateProduct, isLoading: loadingUpdate } =
     useUpdateProductMutation();
 
-  const submitHandler = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  const { mutateAsync: uploadProduct, isLoading: loadingUpload } =
+    useUploadProductMutation();
+
+  const defaultInput: ProductInputType = {
+    name: "",
+    slug: "",
+    price: 0,
+    image: "",
+    images: [],
+    category: "",
+    countInStock: 0,
+    brand: "",
+    description: "",
+  };
+
+  const [productInput, setProductInput] = useState(defaultInput);
+
+  // ---------------------------------------------------------------------------
+  // effects
+  // ---------------------------------------------------------------------------
+
+  useEffect(() => {
+    if (product) {
+      setProductInput(product);
+    }
+  }, [product]);
+
+  // ---------------------------------------------------------------------------
+  // functions
+  // ---------------------------------------------------------------------------
+
+  async function submitHandler(event: React.SyntheticEvent) {
+    event.preventDefault();
     try {
       await updateProduct({
-        _id: productId!,
-        name,
-        slug,
-        price,
-        image,
-        images,
-        category,
-        brand,
-        countInStock,
-        description,
+        ...productInput,
+        _id: product!._id,
       });
       toast.success("Product updated successfully");
       navigate("/admin/products");
     } catch (err) {
       toast.error(getError(err as ApiErrorType));
     }
-  };
+  }
 
-  const { mutateAsync: uploadProduct, isLoading: loadingUpload } =
-    useUploadProductMutation();
-
-  const uploadFileHandler = async (
-    e: React.FormEvent<HTMLInputElement>,
+  async function uploadFileHandler(
+    event: React.FormEvent<HTMLInputElement>,
     forImages: boolean = false
-  ) => {
-    const file = e.currentTarget.files![0];
+  ) {
+    const file = event.currentTarget.files![0];
     const bodyFormData = new FormData();
     bodyFormData.append("image", file);
 
@@ -91,20 +91,32 @@ export function ProductEditPage() {
       const data = await uploadProduct(bodyFormData);
 
       if (forImages) {
-        setImages([...images, data.secure_url]);
+        setProductInput((prev) => ({
+          ...prev,
+          images: [...prev.images, data.secure_url],
+        }));
       } else {
-        setImage(data.secure_url);
+        setProductInput((prev) => ({
+          ...prev,
+          image: data.secure_url,
+        }));
       }
       toast.success("Image uploaded successfully. click Update to apply it");
     } catch (err) {
       toast.error(getError(err as ApiErrorType));
     }
-  };
+  }
 
-  const deleteFileHandler = async (fileName: string) => {
-    setImages(images.filter((x) => x !== fileName));
+  function deleteFileHandler(fileName: string) {
+    setProductInput((prev) => ({
+      ...prev,
+      images: prev.images.filter((item) => item !== fileName),
+    }));
+
     toast.success("Image removed successfully. click Update to apply it");
-  };
+  }
+
+  // ---------------------------------------------------------------------------
   return (
     <Container className="small-container">
       <Helmet>
@@ -123,32 +135,43 @@ export function ProductEditPage() {
           <Form.Group className="mb-3" controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={productInput.name}
+              onChange={(e) =>
+                setProductInput((prev) => ({ ...prev, name: e.target.value }))
+              }
               required
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="slug">
             <Form.Label>Slug</Form.Label>
             <Form.Control
-              value={slug}
-              onChange={(e) => setSlug(e.target.value)}
+              value={productInput.slug}
+              onChange={(e) =>
+                setProductInput((prev) => ({ ...prev, slug: e.target.value }))
+              }
               required
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="name">
             <Form.Label>Price</Form.Label>
             <Form.Control
-              value={price}
-              onChange={(e) => setPrice(Number(e.target.value))}
+              value={productInput.price}
+              onChange={(e) =>
+                setProductInput((prev) => ({
+                  ...prev,
+                  price: Number(e.target.value),
+                }))
+              }
               required
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="image">
             <Form.Label>Image File</Form.Label>
             <Form.Control
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
+              value={productInput.image}
+              onChange={(e) =>
+                setProductInput((prev) => ({ ...prev, image: e.target.value }))
+              }
               required
             />
           </Form.Group>
@@ -160,12 +183,17 @@ export function ProductEditPage() {
 
           <Form.Group className="mb-3" controlId="additionalImage">
             <Form.Label>Additional Images</Form.Label>
-            {images.length === 0 && <MessageBox>No image</MessageBox>}
+            {productInput.images.length === 0 && (
+              <MessageBox>No image</MessageBox>
+            )}
             <ListGroup variant="flush">
-              {images.map((x) => (
-                <ListGroup.Item key={x}>
-                  {x}
-                  <Button variant="light" onClick={() => deleteFileHandler(x)}>
+              {productInput.images.map((item) => (
+                <ListGroup.Item key={item}>
+                  {item}
+                  <Button
+                    variant="light"
+                    onClick={() => deleteFileHandler(item)}
+                  >
                     <i className="fa fa-times-circle"></i>
                   </Button>
                 </ListGroup.Item>
@@ -173,7 +201,7 @@ export function ProductEditPage() {
             </ListGroup>
           </Form.Group>
           <Form.Group className="mb-3" controlId="additionalImageFile">
-            <Form.Label>Upload Aditional Image</Form.Label>
+            <Form.Label>Upload Additional Image</Form.Label>
 
             <input
               type="file"
@@ -186,32 +214,52 @@ export function ProductEditPage() {
           <Form.Group className="mb-3" controlId="category">
             <Form.Label>Category</Form.Label>
             <Form.Control
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={productInput.category}
+              onChange={(e) =>
+                setProductInput((prev) => ({
+                  ...prev,
+                  category: e.target.value,
+                }))
+              }
               required
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="brand">
             <Form.Label>Brand</Form.Label>
             <Form.Control
-              value={brand}
-              onChange={(e) => setBrand(e.target.value)}
+              value={productInput.brand}
+              onChange={(e) =>
+                setProductInput((prev) => ({
+                  ...prev,
+                  brand: e.target.value,
+                }))
+              }
               required
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="countInStock">
             <Form.Label>Count In Stock</Form.Label>
             <Form.Control
-              value={countInStock}
-              onChange={(e) => setCountInStock(Number(e.target.value))}
+              value={productInput.countInStock}
+              onChange={(e) =>
+                setProductInput((prev) => ({
+                  ...prev,
+                  countInStock: Number(e.target.value),
+                }))
+              }
               required
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={productInput.description}
+              onChange={(e) =>
+                setProductInput((prev) => ({
+                  ...prev,
+                  description: e.target.value,
+                }))
+              }
               required
             />
           </Form.Group>

@@ -8,9 +8,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { useGetCategoriesQuery } from "./hooks/productHooks";
-
 import { ListGroup } from "react-bootstrap";
 import { useStore } from "./store-context";
 import { LoadingBox } from "./components/LoadingBox";
@@ -20,24 +18,36 @@ import { getError } from "./utils/utils";
 import { ApiErrorType } from "./types/ApiError";
 
 export function App() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
+
   const { state, dispatch } = useStore();
   const { mode, fullBox, cart, userInfo } = state;
+  const { data: categories, isLoading, error } = useGetCategoriesQuery();
+  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+
+  // ---------------------------------------------------------------------------
+  // effects
+  // ---------------------------------------------------------------------------
 
   useEffect(() => {
     document.body.setAttribute("data-bs-theme", mode);
   }, [mode]);
 
-  const signoutHandler = () => {
+  // ---------------------------------------------------------------------------
+  // function
+  // ---------------------------------------------------------------------------
+
+  function signOutHandler() {
     dispatch({ type: "USER_SIGNOUT" });
     localStorage.removeItem("userInfo");
     localStorage.removeItem("shippingAddress");
     localStorage.removeItem("paymentMethod");
     window.location.href = "/signin";
-  };
-  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+  }
 
-  const { data: categories, isLoading, error } = useGetCategoriesQuery();
-
+  // ---------------------------------------------------------------------------
   return (
     <div
       className={
@@ -93,7 +103,7 @@ export function App() {
                     <Link
                       className="dropdown-item"
                       to="#signout"
-                      onClick={signoutHandler}
+                      onClick={signOutHandler}
                     >
                       Sign Out
                     </Link>

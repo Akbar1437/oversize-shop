@@ -10,47 +10,55 @@ import { ApiErrorType } from "../types/ApiError";
 import {
   useCreateProductMutation,
   useDeleteProductMutation,
-  useGetAdminProdcutsQuery,
+  useGetAdminProductsQuery,
 } from "../hooks/productHooks";
 
 export function ProductListPage() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
   const navigate = useNavigate();
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
   const page = Number(sp.get("page") || 1);
 
-  const { data, isLoading, error, refetch } = useGetAdminProdcutsQuery(page);
+  const { data, isLoading, error, refetch } = useGetAdminProductsQuery(page);
 
   const { mutateAsync: createProduct, isLoading: loadingCreate } =
     useCreateProductMutation();
 
-  const createHandler = async () => {
+  const { mutateAsync: deleteProduct, isLoading: loadingDelete } =
+    useDeleteProductMutation();
+
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
+  async function createHandler() {
     if (window.confirm("Are you sure to create?")) {
       try {
         const data = await createProduct();
-        refetch();
+        await refetch();
         toast.success("Product created successfully");
         navigate(`/admin/product/${data.product._id}`);
       } catch (err) {
         toast.error(getError(err as ApiErrorType));
       }
     }
-  };
-  const { mutateAsync: deleteProduct, isLoading: loadingDelete } =
-    useDeleteProductMutation();
+  }
 
-  const deleteHandler = async (id: string) => {
+  async function deleteHandler(id: string) {
     if (window.confirm("Are you sure to delete?")) {
       try {
-        deleteProduct(id);
-        refetch();
+        await deleteProduct(id);
+        await refetch();
         toast.success("Product deleted successfully");
       } catch (err) {
         toast.error(getError(err as ApiErrorType));
       }
     }
-  };
+  }
 
+  // ---------------------------------------------------------------------------
   return (
     <div>
       <Row>

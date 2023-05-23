@@ -9,6 +9,9 @@ import { ApiErrorType } from "../types/ApiError";
 import { getError } from "../utils/utils";
 
 export function HomePage() {
+  // ---------------------------------------------------------------------------
+  // variables
+  // ---------------------------------------------------------------------------
   const { data: products, isLoading, error } = useGetProductsQuery();
 
   // ---------------------------------------------------------------------------
