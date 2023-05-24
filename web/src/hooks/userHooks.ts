@@ -69,7 +69,8 @@ export const useGetUsersQuery = () =>
 export const useDeleteUserMutation = () =>
   useMutation({
     mutationFn: async (userId: string) =>
-      (await apiClient.delete<{ message: string }>(`api/users/${userId}`)).data,
+      (await apiClient.delete<{ message: string }>(`api/delete-user/${userId}`))
+        .data,
   });
 
 export const useUpdateUserMutation = () =>
@@ -82,7 +83,7 @@ export const useUpdateUserMutation = () =>
     }) =>
       (
         await apiClient.put<{ user: UserType; message: string }>(
-          `api/users/${user._id}`,
+          `api/update-user/${user._id}`,
           user
         )
       ).data,
@@ -92,5 +93,5 @@ export const useGetUserDetailsQuery = (userId: string) =>
   useQuery({
     queryKey: ["users", userId],
     queryFn: async () =>
-      (await apiClient.get<UserType>(`api/users/${userId}`)).data,
+      (await apiClient.get<UserType>(`api/details-user/${userId}`)).data,
   });

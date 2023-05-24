@@ -11,3 +11,6 @@ export * from "./user-sign-up.controller";
 export * from "./user-sign-in.controller";
 export * from "./user-profile.controller";
 export * from "./get-by-name.controller";
+export * from "./get-users.controller";
+export * from "./get-user-by-id.controller";
+export * from "./update-user.controller";

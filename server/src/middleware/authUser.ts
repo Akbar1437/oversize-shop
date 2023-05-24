@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { Config } from "../app/config";
 
-export const authMiddleware = (
+export const authUserMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction

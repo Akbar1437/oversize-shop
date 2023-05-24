@@ -1,6 +1,8 @@
 import * as express from "express";
-import { authMiddleware } from "../middleware/auth";
+import { authUserMiddleware } from "../middleware/authUser";
+import { authAdminMiddleware } from "../middleware/authAdmin";
 import {
+  UpdateUserController,
   createOrderController,
   getByNameController,
   getBySlugController,
@@ -8,6 +10,8 @@ import {
   getOrderController,
   getPaypalKeyController,
   getProductsController,
+  getUserByIdController,
+  getUsersController,
   orderPayController,
   seedController,
   userOrdersController,
@@ -20,14 +24,29 @@ export const router = express.Router();
 
 router.post("/signin", userSignInOrdersController);
 router.post("/signup", userSignUpOrdersController);
-router.post("/order", authMiddleware, createOrderController);
+router.post("/order", authUserMiddleware, createOrderController);
 
-router.put("/order/:id/pay", authMiddleware, orderPayController);
-router.put("/profile", authMiddleware, userProfileController);
+router.put("/order/:id/pay", authUserMiddleware, orderPayController);
+router.put("/profile", authUserMiddleware, userProfileController);
+
+router.get(
+  "/users",
+  authUserMiddleware,
+  authAdminMiddleware,
+  getUsersController
+);
+
+router.get("/details-user/:id", getUserByIdController);
+router.get(
+  "/update-user/:id",
+  authUserMiddleware,
+  authAdminMiddleware,
+  UpdateUserController
+);
 
 router.get("/keys/paypal", getPaypalKeyController);
-router.get("/order/mine", authMiddleware, userOrdersController);
-router.get("/order/:id", authMiddleware, getOrderController);
+router.get("/order/mine", authUserMiddleware, userOrdersController);
+router.get("/order/:id", authUserMiddleware, getOrderController);
 router.get("/products", getProductsController);
 router.get("/categories", getCategoriesController);
 router.get("/slug/:slug", getBySlugController);
