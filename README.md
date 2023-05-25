@@ -1,8 +1,9 @@
 # OVERSIZE shop
 
-MERN stack (MongoDB, ExpressJS, React and Node.JS)
+Demo e-commerce website built using the MERN stack! The platform offers a seamless shopping experience for customers and a user-friendly dashboard for merchants. With features such as user authentication, product search and filtering, shopping cart management, and payment integration, we make it easy for users to find what they need and buy products securely. The website is built using MongoDB, Express.js, React.js and Node.js, making it a powerful and scalable solution for e-commerce businesses of all sizes.
 
 ## demo
+
 👉 Click link: https://oversizexxl.onrender.com
 
 ## installation
@@ -36,7 +37,11 @@ npm install
 ```
 
 ```shell
-npm start
+npm run watch
+```
+
+```shell
+npm run dev
 ```
 
 ## run Frontend
