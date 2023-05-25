@@ -60,7 +60,7 @@ export function App() {
           : "site-container d-flex flex-column"
       }
     >
-      <ToastContainer position="bottom-center" limit={1} />
+      <ToastContainer position="bottom-center" closeOnClick={true} limit={1} />
       <header>
         <Navbar
           className="d-flex flex-column align-items-stretch p-2 pb-0 mb-3 "
@@ -156,7 +156,10 @@ export function App() {
             </Navbar.Collapse>
           </div>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <div className="sub-header d-flex justify-content-start align-items-center mt-2">
+          <div
+            style={{ background: "#252e3d" }}
+            className="sub-header d-flex justify-content-start align-items-center mt-3 mb-3 p-1"
+          >
             <div className="d-flex align-items-center">
               <Link
                 to="#"
@@ -230,13 +233,18 @@ export function App() {
           )}
         </ListGroup>
       </div>
-      <main>
+      <main style={{ flexGrow: "1", marginBottom: "3rem" }}>
         <Container fluid>
           <Outlet />
         </Container>
       </main>
-      <footer>
-        <div className="text-center">All rights reserved</div>
+      <footer className="footer" style={{ background: "#252e3d" }}>
+        <div
+          className="text-center"
+          style={{ color: "silver", padding: "1rem" }}
+        >
+          Copyright @2023 | All rights reserved
+        </div>
       </footer>
     </div>
   );

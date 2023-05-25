@@ -2,7 +2,7 @@ import * as express from "express";
 import { authUserMiddleware } from "../middleware/authUser";
 import { authAdminMiddleware } from "../middleware/authAdmin";
 import {
-  UpdateUserController,
+  updateUserController,
   createOrderController,
   getByNameController,
   getBySlugController,
@@ -18,6 +18,7 @@ import {
   userProfileController,
   userSignInOrdersController,
   userSignUpOrdersController,
+  deleteUserController,
 } from "../controllers";
 
 export const router = express.Router();
@@ -28,6 +29,19 @@ router.post("/order", authUserMiddleware, createOrderController);
 
 router.put("/order/:id/pay", authUserMiddleware, orderPayController);
 router.put("/profile", authUserMiddleware, userProfileController);
+router.put(
+  "/update-user/:id",
+  authUserMiddleware,
+  authAdminMiddleware,
+  updateUserController
+);
+
+router.delete(
+  "/delete-user/:id",
+  authUserMiddleware,
+  authAdminMiddleware,
+  deleteUserController
+);
 
 router.get(
   "/users",
@@ -37,12 +51,6 @@ router.get(
 );
 
 router.get("/details-user/:id", getUserByIdController);
-router.get(
-  "/update-user/:id",
-  authUserMiddleware,
-  authAdminMiddleware,
-  UpdateUserController
-);
 
 router.get("/keys/paypal", getPaypalKeyController);
 router.get("/order/mine", authUserMiddleware, userOrdersController);

@@ -14,3 +14,4 @@ export * from "./get-by-name.controller";
 export * from "./get-users.controller";
 export * from "./get-user-by-id.controller";
 export * from "./update-user.controller";
+export * from "./delete-user.controller";
