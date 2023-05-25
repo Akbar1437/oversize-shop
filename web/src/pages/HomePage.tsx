@@ -23,12 +23,12 @@ export function HomePage() {
     <div>
       <ControlledCarousel products={products!} />
 
-      <Row>
+      <Row className="d-flex justify-content-center align-items-center">
         <Helmet>
           <title>Oversize shop</title>
         </Helmet>
         {products!.map((product) => (
-          <Col key={product.slug} sm={6} md={4} lg={3}>
+          <Col key={product.slug} sm="auto" md="auto" lg="auto">
             <ProductItem product={product} />
           </Col>
         ))}
