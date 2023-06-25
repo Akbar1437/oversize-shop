@@ -7,7 +7,28 @@ export async function getProductsController(
   response: Response
 ) {
   handler(request, response, async () => {
-    const products = await ProductModel.find();
-    return products;
+    const pageNumber = Number(request.query.page) || 1;
+    const limit = Number(request.query.limit) || 8;
+
+    let skip = (pageNumber - 1) * limit;
+
+    const totalCountPromise = ProductModel.countDocuments().exec();
+
+    const itemsPromise = ProductModel.find().skip(skip).limit(limit);
+
+    const [totalCount, items] = await Promise.all([
+      totalCountPromise,
+      itemsPromise,
+    ]);
+
+    const pageCount = Math.ceil(totalCount / limit);
+
+    return {
+      products: items,
+      pagination: {
+        totalCount: totalCount,
+        pageCount: pageCount,
+      },
+    };
   });
 }

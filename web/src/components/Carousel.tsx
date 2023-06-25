@@ -10,7 +10,11 @@ export function ControlledCarousel({ products }: { products: ProductType[] }) {
   };
   // ---------------------------------------------------------------------------
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect}>
+    <Carousel
+      style={{ width: "80%" }}
+      activeIndex={index}
+      onSelect={handleSelect}
+    >
       {products.map((product) => (
         <Carousel.Item
           key={product._id}

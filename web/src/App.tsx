@@ -238,7 +238,10 @@ export function App() {
           <Outlet />
         </Container>
       </main>
-      <footer className="footer" style={{ background: "#252e3d" }}>
+      <footer
+        className="footer"
+        style={{ background: "#252e3d", zIndex: 9999 }}
+      >
         <div
           className="text-center"
           style={{ color: "silver", padding: "1rem" }}

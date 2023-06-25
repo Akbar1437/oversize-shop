@@ -40,7 +40,7 @@ export function ProductItem({ product }: { product: ProductType }) {
 
   // ---------------------------------------------------------------------------
   return (
-    <Card style={{ marginBottom: "2rem" }}>
+    <Card style={{ marginBottom: "2rem", position: "relative" }}>
       <Link to={`/product/${product.slug}`}>
         <img
           src={product.image}
@@ -49,6 +49,11 @@ export function ProductItem({ product }: { product: ProductType }) {
           width={400}
           height={300}
         />
+        {product.isSale && (
+          <div className="badge-overlay">
+            <span className="top-right badge red">Sale</span>
+          </div>
+        )}
       </Link>
       <Card.Body>
         <Link

@@ -2,11 +2,23 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import apiClient from "../http/apiClient";
 import { ProductType } from "../types/Product";
 
-export const useGetProductsQuery = () =>
+interface IProduct {
+  products: ProductType[];
+  pagination: {
+    totalCount: number;
+    pageCount: number;
+  };
+}
+
+export const useGetProductsQuery = (page: number) =>
   useQuery({
-    queryKey: ["products"],
+    queryKey: ["products", page],
     queryFn: async () =>
-      (await apiClient.get<ProductType[]>(`api/products`)).data,
+      (
+        await apiClient.get<IProduct>(`api/products`, {
+          params: { page, limit: 8 },
+        })
+      ).data,
   });
 
 export const useGetProductDetailsBySlugQuery = (slug: string) =>
