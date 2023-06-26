@@ -109,7 +109,7 @@ a.header-link:hover,
 }
 
 /* ================== Product Badge CSS ========================*/
-.badge {
+.badge-sale {
     margin: 0;
     padding: 0;
     color: white;
@@ -122,8 +122,8 @@ a.header-link:hover,
     background: #ed1b24;
 }
 
-.badge::before,
-.badge::after {
+.badge-sale::before,
+.badge-sale::after {
     content: '';
     position: absolute;
     top: 0;
@@ -134,11 +134,11 @@ a.header-link:hover,
     min-width: 55px
 }
 
-.badge::before {
+.badge-sale::before {
     right: 100%
 }
 
-.badge::after {
+.badge-sale::after {
     left: 100%
 }
 
@@ -154,7 +154,7 @@ a.header-link:hover,
     transform-origin: top left;
 }
 
-.badge.red {
+.badge-sale.red {
     background: #ed1b24;
 }
 

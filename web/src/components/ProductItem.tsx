@@ -51,7 +51,7 @@ export function ProductItem({ product }: { product: ProductType }) {
         />
         {product.isSale && (
           <div className="badge-overlay">
-            <span className="top-right badge red">Sale</span>
+            <span className="top-right badge-sale red">Sale</span>
           </div>
         )}
       </Link>

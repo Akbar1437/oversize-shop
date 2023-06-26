@@ -60,7 +60,7 @@ export function App() {
           : "site-container d-flex flex-column"
       }
     >
-      <ToastContainer position="bottom-center" closeOnClick={true} limit={1} />
+      <ToastContainer position="top-left" closeOnClick={true} limit={1} />
       <header>
         <Navbar
           className="d-flex flex-column align-items-stretch p-2 pb-0 mb-3 "
