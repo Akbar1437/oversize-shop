@@ -1,14 +1,14 @@
-import { Helmet } from "react-helmet-async";
-import { useGetProductDetailsBySlugQuery } from "../hooks/productHooks";
-import { useNavigate, useParams } from "react-router-dom";
-import { convertProductToCartItem, getError } from "../utils/utils";
-import { ApiErrorType } from "../types/ApiError";
 import { Badge, Button, Card, Col, ListGroup, Row } from "react-bootstrap";
+import { Helmet } from "react-helmet-async";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useStore } from "../store-context";
-import { LoadingBox } from "../components/LoadingBox";
 import { MessageBox } from "../components/MessageBox";
+import { ProductPageSkeleton } from "../components/ProductPageSkeleton";
 import { Rating } from "../components/Rating";
+import { useGetProductDetailsBySlugQuery } from "../hooks/productHooks";
+import { useStore } from "../store-context";
+import { ApiErrorType } from "../types/ApiError";
+import { convertProductToCartItem, getError } from "../utils/utils";
 
 export function ProductPage() {
   // ---------------------------------------------------------------------------
@@ -54,7 +54,7 @@ export function ProductPage() {
 
   // ---------------------------------------------------------------------------
   return isLoading ? (
-    <LoadingBox />
+    <ProductPageSkeleton />
   ) : error ? (
     <MessageBox variant="danger">{getError(error as ApiErrorType)}</MessageBox>
   ) : !product ? (

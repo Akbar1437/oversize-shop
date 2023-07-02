@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { ControlledCarousel } from "../components/Carousel";
-import { LoadingBox } from "../components/LoadingBox";
 import { MessageBox } from "../components/MessageBox";
 import { Paginate } from "../components/Pagination";
 import { ProductItem } from "../components/ProductItem";
+import { ProductItemSkeleton } from "../components/ProductItemSkeleton";
 import { useGetProductsQuery } from "../hooks/productHooks";
 import { ApiErrorType } from "../types/ApiError";
 import { getError } from "../utils/utils";
@@ -20,7 +20,7 @@ export function HomePage() {
 
   // ---------------------------------------------------------------------------
   return isLoading ? (
-    <LoadingBox />
+    <ProductItemSkeleton cards={8} />
   ) : error ? (
     <MessageBox variant="danger">{getError(error as ApiErrorType)}</MessageBox>
   ) : (

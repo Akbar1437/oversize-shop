@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import "./index.css";
+import "react-loading-skeleton/dist/skeleton.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
@@ -33,6 +34,7 @@ import { UserEditPage } from "./pages/UserEditPage.tsx";
 import { ProductListPage } from "./pages/ProductListPage.tsx";
 import { ProductEditPage } from "./pages/ProductEditPage.tsx";
 import { OrderListPage } from "./pages/OrderListPage.tsx";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -74,7 +76,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <PayPalScriptProvider options={{ "client-id": "sb" }} deferLoading={true}>
         <HelmetProvider>
           <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
+            <SkeletonTheme baseColor="#313131" highlightColor="#525252">
+              <RouterProvider router={router} />
+            </SkeletonTheme>
             <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
         </HelmetProvider>

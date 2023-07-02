@@ -1,9 +1,9 @@
 import { Col, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation } from "react-router-dom";
-import { LoadingBox } from "../components/LoadingBox";
 import { MessageBox } from "../components/MessageBox";
 import { ProductItem } from "../components/ProductItem";
+import { ProductItemSkeleton } from "../components/ProductItemSkeleton";
 import { useSearchProductQuery } from "../hooks/productHooks";
 import { ApiErrorType } from "../types/ApiError";
 import { getError } from "../utils/utils";
@@ -20,7 +20,7 @@ export function SearchProductPage() {
 
   // ---------------------------------------------------------------------------
   return isLoading ? (
-    <LoadingBox />
+    <ProductItemSkeleton cards={8} />
   ) : error ? (
     <MessageBox variant="danger">{getError(error as ApiErrorType)}</MessageBox>
   ) : (
