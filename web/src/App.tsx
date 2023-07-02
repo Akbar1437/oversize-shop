@@ -25,7 +25,7 @@ export function App() {
   const { state, dispatch } = useStore();
   const { mode, fullBox, cart, userInfo } = state;
   const { data: categories, isLoading, error } = useGetCategoriesQuery();
-  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+  const [sidebarIsOpen, setSidebarOpen] = useState(false);
 
   // ---------------------------------------------------------------------------
   // effects
@@ -164,7 +164,7 @@ export function App() {
               <Link
                 to="#"
                 className="nav-link header-link p-1 px-3"
-                onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
+                onClick={() => setSidebarOpen(!sidebarIsOpen)}
               >
                 <i className="fas fa-bars"></i>
               </Link>
@@ -183,7 +183,7 @@ export function App() {
       </header>
       {sidebarIsOpen && (
         <div
-          onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
+          onClick={() => setSidebarOpen(!sidebarIsOpen)}
           className="side-navbar-backdrop"
         ></div>
       )}
@@ -200,13 +200,13 @@ export function App() {
               {" "}
               <LinkContainer
                 to={userInfo ? `/profile` : `/signin`}
-                onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
+                onClick={() => setSidebarOpen(!sidebarIsOpen)}
               >
                 <span>{userInfo ? userInfo.name : `sign in`}</span>
               </LinkContainer>
               <Button
                 variant={mode}
-                onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
+                onClick={() => setSidebarOpen(!sidebarIsOpen)}
               >
                 <i className="fa fa-times" />
               </Button>
@@ -224,7 +224,7 @@ export function App() {
               <ListGroup.Item action key={category}>
                 <LinkContainer
                   to={{ pathname: "/search", search: `category=${category}` }}
-                  onClick={() => setSidebarIsOpen(false)}
+                  onClick={() => setSidebarOpen(false)}
                 >
                   <Nav.Link>{category}</Nav.Link>
                 </LinkContainer>
