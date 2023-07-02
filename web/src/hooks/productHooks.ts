@@ -35,8 +35,6 @@ export const useGetCategoriesQuery = () =>
   });
 
 export const useSearchProductQuery = (query: string) => {
-  console.log("query", query);
-
   return useQuery({
     queryKey: ["search", query],
     queryFn: async () =>

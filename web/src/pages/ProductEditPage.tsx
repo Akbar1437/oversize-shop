@@ -31,6 +31,8 @@ export function ProductEditPage() {
     error,
   } = useGetProductDetailsQuery(productId!);
 
+  console.log("product", product);
+
   const { mutateAsync: updateProduct, isLoading: loadingUpdate } =
     useUpdateProductMutation();
 
@@ -183,21 +185,22 @@ export function ProductEditPage() {
 
           <Form.Group className="mb-3" controlId="additionalImage">
             <Form.Label>Additional Images</Form.Label>
-            {productInput.images.length === 0 && (
+            {productInput.images && productInput.images.length === 0 && (
               <MessageBox>No image</MessageBox>
             )}
             <ListGroup variant="flush">
-              {productInput.images.map((item) => (
-                <ListGroup.Item key={item}>
-                  {item}
-                  <Button
-                    variant="light"
-                    onClick={() => deleteFileHandler(item)}
-                  >
-                    <i className="fa fa-times-circle"></i>
-                  </Button>
-                </ListGroup.Item>
-              ))}
+              {productInput.images &&
+                productInput.images.map((item) => (
+                  <ListGroup.Item key={item}>
+                    {item}
+                    <Button
+                      variant="light"
+                      onClick={() => deleteFileHandler(item)}
+                    >
+                      <i className="fa fa-times-circle"></i>
+                    </Button>
+                  </ListGroup.Item>
+                ))}
             </ListGroup>
           </Form.Group>
           <Form.Group className="mb-3" controlId="additionalImageFile">

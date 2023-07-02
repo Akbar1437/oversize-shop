@@ -19,6 +19,8 @@ import {
   userSignInOrdersController,
   userSignUpOrdersController,
   deleteUserController,
+  getOrderSummaryController,
+  getOrdersController,
 } from "../controllers";
 
 export const router = express.Router();
@@ -50,13 +52,27 @@ router.get(
   getUsersController
 );
 
+router.get(
+  "/orders",
+  authUserMiddleware,
+  authAdminMiddleware,
+  getOrdersController
+);
+
 router.get("/details-user/:id", getUserByIdController);
 
 router.get("/keys/paypal", getPaypalKeyController);
 router.get("/order/mine", authUserMiddleware, userOrdersController);
 router.get("/order/:id", authUserMiddleware, getOrderController);
+router.get(
+  "/orders/summary",
+  authUserMiddleware,
+  authAdminMiddleware,
+  getOrderSummaryController
+);
 router.get("/products", getProductsController);
+
 router.get("/categories", getCategoriesController);
-router.get("/slug/:slug", getBySlugController);
+router.get("/products/:id", getBySlugController);
 router.get("/search/:query", getByNameController);
 router.get("/seed", seedController);

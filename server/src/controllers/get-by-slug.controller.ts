@@ -7,8 +7,9 @@ export async function getBySlugController(
   response: Response
 ) {
   handler(request, response, async () => {
-    const { slug } = request.params;
-    const product = await ProductModel.findOne({ slug: slug });
+    const { id } = request.params;
+
+    const product = await ProductModel.findOne({ _id: id });
     if (!product) {
       throw new Error("Product Not Found");
     }

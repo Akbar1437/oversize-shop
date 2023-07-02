@@ -1,28 +1,28 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { LoadingBox } from "../components/LoadingBox";
 import { MessageBox } from "../components/MessageBox";
-import { getError } from "../utils/utils";
-import { ApiErrorType } from "../types/ApiError";
+import { Paginate } from "../components/Pagination";
 import {
   useCreateProductMutation,
   useDeleteProductMutation,
-  useGetAdminProductsQuery,
+  useGetProductsQuery,
 } from "../hooks/productHooks";
+import { ApiErrorType } from "../types/ApiError";
+import { getError } from "../utils/utils";
 
 export function ProductListPage() {
   // ---------------------------------------------------------------------------
   // variables
   // ---------------------------------------------------------------------------
   const navigate = useNavigate();
-  const { search } = useLocation();
-  const sp = new URLSearchParams(search);
-  const page = Number(sp.get("page") || 1);
+  const [page, setPage] = useState(1);
 
-  const { data, isLoading, error, refetch } = useGetAdminProductsQuery(page);
+  const { data, isLoading, error, refetch } = useGetProductsQuery(page);
 
   const { mutateAsync: createProduct, isLoading: loadingCreate } =
     useCreateProductMutation();
@@ -125,18 +125,22 @@ export function ProductListPage() {
               ))}
             </tbody>
           </table>
-          <div>
-            {[...Array(data!.pages).keys()].map((x) => (
-              <Link
-                className={
-                  x + 1 === Number(data!.page) ? "btn text-bold" : "btn"
-                }
-                key={x + 1}
-                to={`/admin/products?page=${x + 1}`}
-              >
-                {x + 1}
-              </Link>
-            ))}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            {data && data.pagination.totalCount > 1 && (
+              <Paginate
+                total={data.pagination.pageCount}
+                current={page}
+                onChange={(value) => setPage(value)}
+              />
+            )}
           </div>
         </>
       )}

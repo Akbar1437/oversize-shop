@@ -3,6 +3,14 @@ import apiClient from "../http/apiClient";
 import { OrderType } from "../types/Order";
 import { CartItemType, ShippingAddressType } from "../types/Cart";
 
+interface IOrders {
+  orders: OrderType[];
+  pagination: {
+    totalCount: number;
+    pageCount: number;
+  };
+}
+
 export const useGetOrderDetailsQuery = (id: string) =>
   useQuery({
     queryKey: ["order", id],
@@ -68,10 +76,15 @@ export const useGetOrderSummaryQuery = () =>
       ).data,
   });
 
-export const useGetOrdersQuery = () =>
+export const useGetOrdersQuery = (page: number) =>
   useQuery({
-    queryKey: ["orders"],
-    queryFn: async () => (await apiClient.get<[OrderType]>(`api/orders`)).data,
+    queryKey: ["orders", page],
+    queryFn: async () =>
+      (
+        await apiClient.get<IOrders>(`api/orders`, {
+          params: { page, limit: 12 },
+        })
+      ).data,
   });
 
 export const useDeleteOrderMutation = () =>
