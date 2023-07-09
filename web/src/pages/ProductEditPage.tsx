@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import ListGroup from "react-bootstrap/ListGroup";
 import Form from "react-bootstrap/Form";
 import { Helmet } from "react-helmet-async";
-import Button from "react-bootstrap/Button";
-import { getError } from "../utils/utils";
-import { ApiErrorType } from "../types/ApiError";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { LoadingBox } from "../components/LoadingBox";
 import { MessageBox } from "../components/MessageBox";
 import {
@@ -15,7 +12,9 @@ import {
   useUpdateProductMutation,
   useUploadProductMutation,
 } from "../hooks/productHooks";
+import { ApiErrorType } from "../types/ApiError";
 import { ProductInputType } from "../types/Product";
+import { getError } from "../utils/utils";
 
 export function ProductEditPage() {
   // ---------------------------------------------------------------------------
@@ -44,7 +43,6 @@ export function ProductEditPage() {
     slug: "",
     price: 0,
     image: "",
-    images: [],
     category: "",
     countInStock: 0,
     brand: "",
@@ -81,10 +79,7 @@ export function ProductEditPage() {
     }
   }
 
-  async function uploadFileHandler(
-    event: React.FormEvent<HTMLInputElement>,
-    forImages: boolean = false
-  ) {
+  async function uploadFileHandler(event: React.FormEvent<HTMLInputElement>) {
     const file = event.currentTarget.files![0];
     const bodyFormData = new FormData();
     bodyFormData.append("image", file);
@@ -92,30 +87,15 @@ export function ProductEditPage() {
     try {
       const data = await uploadProduct(bodyFormData);
 
-      if (forImages) {
-        setProductInput((prev) => ({
-          ...prev,
-          images: [...prev.images, data.secure_url],
-        }));
-      } else {
-        setProductInput((prev) => ({
-          ...prev,
-          image: data.secure_url,
-        }));
-      }
+      setProductInput((prev) => ({
+        ...prev,
+        image: data.secure_url,
+      }));
+
       toast.success("Image uploaded successfully. click Update to apply it");
     } catch (err) {
       toast.error(getError(err as ApiErrorType));
     }
-  }
-
-  function deleteFileHandler(fileName: string) {
-    setProductInput((prev) => ({
-      ...prev,
-      images: prev.images.filter((item) => item !== fileName),
-    }));
-
-    toast.success("Image removed successfully. click Update to apply it");
   }
 
   // ---------------------------------------------------------------------------
@@ -180,37 +160,6 @@ export function ProductEditPage() {
           <Form.Group className="mb-3" controlId="imageFile">
             <Form.Label>Upload Image</Form.Label>
             <input type="file" onChange={uploadFileHandler}></input>
-            {loadingUpload && <LoadingBox></LoadingBox>}
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="additionalImage">
-            <Form.Label>Additional Images</Form.Label>
-            {productInput.images && productInput.images.length === 0 && (
-              <MessageBox>No image</MessageBox>
-            )}
-            <ListGroup variant="flush">
-              {productInput.images &&
-                productInput.images.map((item) => (
-                  <ListGroup.Item key={item}>
-                    {item}
-                    <Button
-                      variant="light"
-                      onClick={() => deleteFileHandler(item)}
-                    >
-                      <i className="fa fa-times-circle"></i>
-                    </Button>
-                  </ListGroup.Item>
-                ))}
-            </ListGroup>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="additionalImageFile">
-            <Form.Label>Upload Additional Image</Form.Label>
-
-            <input
-              type="file"
-              onChange={(e) => uploadFileHandler(e, true)}
-            ></input>
-
             {loadingUpload && <LoadingBox></LoadingBox>}
           </Form.Group>
 

@@ -68,10 +68,20 @@ export const useGetAdminProductsQuery = (page: number) =>
 
 export const useCreateProductMutation = () =>
   useMutation({
-    mutationFn: async () =>
+    mutationFn: async (product: {
+      name: string;
+      slug: string;
+      price: number;
+      image: string;
+      category: string;
+      brand: string;
+      countInStock: number;
+      description: string;
+    }) =>
       (
         await apiClient.post<{ product: ProductType; message: string }>(
-          `api/products`
+          `api/save-product`,
+          product
         )
       ).data,
   });
@@ -90,7 +100,6 @@ export const useUpdateProductMutation = () =>
       slug: string;
       price: number;
       image: string;
-      images: string[];
       category: string;
       brand: string;
       countInStock: number;
@@ -109,7 +118,7 @@ export const useUploadProductMutation = () =>
     mutationFn: async (formData: FormData) =>
       (
         await apiClient.post<{ secure_url: string }>(
-          `api/uploads/local`,
+          `api/local-upload-file`,
           formData,
           {
             headers: {

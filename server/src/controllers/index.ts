@@ -17,3 +17,5 @@ export * from "./update-user.controller";
 export * from "./delete-user.controller";
 export * from "./get-order-summary.controller";
 export * from "./get-orders.controller";
+export * from "./create-product.controller";
+export * from "./local-upload-file.controller";

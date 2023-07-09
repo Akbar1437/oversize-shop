@@ -35,5 +35,4 @@ export type ProductInputType = {
   price: number;
   countInStock: number;
   description: string;
-  images: string[];
 };
