@@ -7,7 +7,6 @@ export async function localUploadFileController(
 ) {
   handler(request, response, async () => {
     if (!request.file) throw Error("req.file is null");
-    console.log("request file", request.file);
 
     return {
       secure_url: `/${request.file.path}`,

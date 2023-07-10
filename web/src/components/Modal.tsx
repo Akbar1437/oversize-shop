@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import Modal from "react-bootstrap/Modal";
 
 export function Modalize({
