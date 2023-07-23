@@ -76,6 +76,8 @@ export function ProductListPage() {
     } catch (err) {
       toast.error(getError(err as ApiErrorType));
     }
+    setModalShow(false);
+    setProductInput(defaultInput);
   }
 
   async function uploadFileHandler(event: React.FormEvent<HTMLInputElement>) {

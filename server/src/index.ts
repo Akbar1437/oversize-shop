@@ -1,11 +1,10 @@
 import * as cors from "cors";
-import * as dotenv from "dotenv";
 import * as express from "express";
-import * as path from "path";
-import { router } from "./routers";
 import mongoose from "mongoose";
+import * as path from "path";
 import { Config } from "./app/config";
-dotenv.config();
+import { router } from "./routers";
+require("dotenv").config();
 
 const PORT = parseInt((process.env.PORT || "4000") as string, 10);
 const app = express();
@@ -17,9 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", router);
 
-app.use(express.static(path.join(__dirname, "../../../web/dist")));
 app.get("*", (req: express.Request, res: express.Response) =>
-  res.sendFile(path.join(__dirname, "../../../web/dist/index.html"))
+  res.sendFile(path.join(__dirname, "../../web/dist/index.html"))
 );
 
 app.use(

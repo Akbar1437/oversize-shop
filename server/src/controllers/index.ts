@@ -18,4 +18,4 @@ export * from "./delete-user.controller";
 export * from "./get-order-summary.controller";
 export * from "./get-orders.controller";
 export * from "./create-product.controller";
-export * from "./local-upload-file.controller";
+export * from "./upload-file.controller";

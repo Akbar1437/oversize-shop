@@ -11,7 +11,9 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "strict": true
+    "strict": true,
+    "types": ["node", "cloudinary", "dotenv", "@types/multer"]
   },
+
   "include": ["**/*.ts"]
 }

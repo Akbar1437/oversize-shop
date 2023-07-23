@@ -25,7 +25,7 @@ export const useGetProductDetailsBySlugQuery = (slug: string) =>
   useQuery({
     queryKey: ["slug", slug],
     queryFn: async () =>
-      (await apiClient.get<ProductType>(`api/slug/${slug}`)).data,
+      (await apiClient.get<ProductType>(`api/products/${slug}`)).data,
   });
 
 export const useGetCategoriesQuery = () =>
@@ -118,7 +118,7 @@ export const useUploadProductMutation = () =>
     mutationFn: async (formData: FormData) =>
       (
         await apiClient.post<{ secure_url: string }>(
-          `api/local-upload-file`,
+          `api/upload-file`,
           formData,
           {
             headers: {

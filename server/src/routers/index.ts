@@ -22,17 +22,17 @@ import {
   getOrderSummaryController,
   getOrdersController,
   createProductController,
-  localUploadFileController,
+  uploadFileController,
 } from "../controllers";
 import * as multer from "multer";
 import * as path from "path";
 
 export const router = express.Router();
 
-// LOCAL UPLOAD
+// UPLOAD FILE
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, path.join(__dirname, "../../../uploads"));
+    cb(null, path.join(__dirname, "../upload/"));
   },
   filename(req, file, cb) {
     cb(null, `${Date.now()}.jpg`);
@@ -52,10 +52,10 @@ router.post(
 );
 
 router.post(
-  "/local-upload-file",
+  "/upload-file",
   authUserMiddleware,
   uploadLocal.single("image"),
-  localUploadFileController
+  uploadFileController
 );
 
 router.put("/order/:id/pay", authUserMiddleware, orderPayController);
@@ -102,6 +102,6 @@ router.get(
 router.get("/products", getProductsController);
 
 router.get("/categories", getCategoriesController);
-router.get("/products/:id", getBySlugController);
+router.get("/products/:slug", getBySlugController);
 router.get("/search/:query", getByNameController);
 router.get("/seed", seedController);
