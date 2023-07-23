@@ -16,8 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", router);
 
+app.use(express.static(path.join(__dirname, "../../../web/dist")));
 app.get("*", (req: express.Request, res: express.Response) =>
-  res.sendFile(path.join(__dirname, "../../web/dist/index.html"))
+  res.sendFile(path.join(__dirname, "../../../web/dist/index.html"))
 );
 
 app.use(
